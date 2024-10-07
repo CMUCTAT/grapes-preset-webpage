@@ -11,6 +11,156 @@
         height: 100%;
         margin: 0;
       }
+
+:root {
+  --gjs-font-color: #F2F2F2;
+
+  --gjs-primary-color: #182444; 
+  --gjs-secondary-color: #F2F2F2; 
+  --gjs-highlight-color: #6688E3; 
+  --gjs-button-color: #202c64; 
+  --gjs-danger-color: #DB4F2E; 
+
+  --gjs-disabled-bg: #E3E3E3; 
+  --gjs-save-button-bg: #2798EB; 
+}
+
+body, .gjs-block-label, .gjs-clm-label-sel, .gjs-sm-label, .gjs-label, .gjs-layer-name {
+  color: var(--gjs-font-color);
+}
+
+.gjs-pn-panel {
+  background-color: var(--gjs-primary-color);
+}
+
+.gjs-pn-views-container, .gjs-sm-sectors, .gjs-layers {
+  background-color: var(--gjs-primary-color);
+}
+
+.gjs-btn, .gjs-button, .gjs-pn-btn {
+  background-color: var(--gjs-button-color);
+  color: #FFFFFF;
+}
+
+.gjs-btn:hover, .gjs-button:hover, .gjs-pn-btn:hover {
+  background-color: var(--gjs-highlight-color);
+}
+
+.gjs-btn-prim {
+  background-color: var(--gjs-save-button-bg);
+  color: #FFFFFF;
+}
+
+.gjs-btn-danger {
+  background-color: var(--gjs-danger-color);
+  color: #FFFFFF;
+}
+
+.gjs-selected {
+  outline: 2px solid var(--gjs-highlight-color);
+}
+
+.gjs-disabled, .gjs-no-pointer-events {
+  background-color: var(--gjs-disabled-bg);
+  color: #A0A0A0;
+}
+
+.gjs-field input, .gjs-field textarea {
+  background-color: #FFFFFF;
+  color: var(--gjs-font-color);
+}
+
+.gjs-editor-cont ::-webkit-scrollbar-thumb {
+  background-color: var(--gjs-disabled-bg);
+}
+
+.gjs-editor-cont ::-webkit-scrollbar-track {
+  background-color: var(--gjs-secondary-color);
+}
+
+.gjs-pn-btn svg, .gjs-sm-sector-caret, .gjs-layer-caret, .gjs-layer-vis-on, .gjs-layer-vis-off, .gjs-layer-move, .gjs-clm-tags-btn svg {
+  fill: #FFFFFF;
+}
+
+.CodeMirror, .CodeMirror * {
+  color: var(--gjs-font-color);
+}
+
+.gjs-blocks-c {
+  background-color: var(--gjs-primary-color);
+}
+
+.gjs-block svg {
+  fill: var(--gjs-font-color);
+}
+
+.gjs-block.gjs-block-selected {
+  border-color: var(--gjs-highlight-color);
+}
+
+.gjs-layers {
+  background-color: var(--gjs-primary-color);
+}
+
+.gjs-sm-properties, .gjs-trt-traits {
+  background-color: var(--gjs-primary-color);
+}
+
+.gjs-mdl-dialog {
+  background-color: #FFFFFF;
+  color: var(--gjs-font-color);
+}
+
+.gjs-toolbar {
+  background-color: var(--gjs-primary-color);
+}
+
+.gjs-toolbar-item svg {
+  fill: #FFFFFF;
+}
+
+.gjs-one-bg {
+  background-color: var(--gjs-primary-color);
+}
+
+.gjs-two-bg {
+  background-color: var(--gjs-secondary-color);
+}
+
+.gjs-highlight {
+  background-color: var(--gjs-highlight-color);
+}
+
+.gjs-color-warn, .gjs-color-red {
+  color: var(--gjs-danger-color);
+}
+
+.gjs-badge {
+  background-color: var(--gjs-highlight-color);
+  color: #FFFFFF;
+}
+
+.gjs-block svg, .gjs-block-svg, .gjs-block-svg-path {
+  fill: var(--gjs-font-color);
+}
+
+.gjs-pn-btn svg, .gjs-toolbar-item svg, .gjs-sm-sector-caret, .gjs-layer-caret, .gjs-layer-vis-on, .gjs-layer-vis-off, .gjs-layer-move {
+  fill: #FFFFFF;
+}
+
+#layers-container {
+  background-color: var(--gjs-primary-color);
+  color: var(--gjs-font-color);
+}
+
+#layers-container .gjs-layers {
+  background-color: var(--gjs-primary-color);
+}
+
+#layers-container .gjs-layer {
+  color: var(--gjs-font-color);
+}
+
     </style>
   </head>
   <body>
@@ -80,7 +230,7 @@
 
     <script type="text/javascript">
       window.onload = () => {
-        window.editor = grapesjs.init({
+        var editor = grapesjs.init({
           height: '100%',
           showOffsets: true,
           noticeOnUnload: false,
@@ -90,7 +240,9 @@
 
           plugins: ['grapesjs-preset-webpage'],
           pluginsOpts: {
-            'grapesjs-preset-webpage': {}
+            'grapesjs-preset-webpage': {
+              useCustomTheme: false,
+            }
           }
         });
       };
