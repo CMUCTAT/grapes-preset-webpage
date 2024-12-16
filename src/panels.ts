@@ -21,7 +21,7 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
   const obl = 'open-blocks';
   const ful = 'fullscreen';
   const prv = 'preview';
-  const iconStyle = 'style="display: block; max-width:22px"';
+  const iconStyle = 'style="display: block; width:26px"';
 
   config.showDevices = false;
 
@@ -45,21 +45,23 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
     height: 15px; 
     display: flex;
     justify-content: flex-start;
+    margin-bottom: 4px;
   "
   title="Layers Panel"
 >
   <svg 
     width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
+    height="24"  
+    viewBox="0 0 350 350" 
     style="
       fill: white; 
       transition: transform 0.3s ease;
+      transform: translate(5px, 5px)
     "
     class="dropdown-arrow"
   >
-    
-    <path d="M7 10l5 5 5-5z"/>
+    <path d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393  c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393  s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"   transform="scale(0.4)" 
+/>
   </svg>
   <span 
     class="layers-button-text" 
@@ -68,12 +70,13 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
       color: white; 
       font-weight: 500;
       user-select: none;
+      margin-bottom: 4px;
     "
   >
       Layers
   </span>
-
 </div>
+
     `
     },
     {
@@ -95,18 +98,99 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
         label: `<svg ${iconStyle} viewBox="0 0 24 24">
             <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
         </svg>`
+      } ,     {
+        id: 'oba-override',
+        command: 'oba-override',
+        label: `<div 
+  class="layers-button-content" 
+  style="
+    width: 100px; 
+    height: 15px; 
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 4px;
+  "
+  title="Layers Panel"
+>
+  <svg 
+    width="24" 
+    height="24"  
+    viewBox="0 0 350 350" 
+    
+    style="
+      fill: white; 
+      transition: transform 0.3s ease;
+          transform: translate(5px, 5px)
+
+    "
+    class="dropdown-arrow"
+  >
+    <path
+    d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393  c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393  s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"
+    transform="scale(0.4)">
+  </svg>
+  <span 
+    class="layers-button-text" 
+    style="
+      font-size: 14px; 
+      color: white; 
+      font-weight: 500;
+      user-select: none;
+      margin-bottom: 4px;
+    "
+  >
+      Basics
+  </span>
+</div>`
+      }, {
+        id: 'ctat-override',
+        command: '',
+        label: `<div 
+  class="layers-button-content" 
+  style="
+    width: 100px; 
+    height: 15px; 
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 4px;
+  "
+  title="Layers Panel"
+>
+  <svg 
+    width="24" 
+    height="24"  
+    viewBox="0 0 350 350" 
+    
+    style="
+      fill: white; 
+      transition: transform 0.3s ease;
+          transform: translate(5px, 5px)
+
+    "
+    class="dropdown-arrow"
+  >
+    <path
+    d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393  c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393  s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"
+    transform="scale(0.4)">
+  </svg>
+  <span 
+    class="layers-button-text" 
+    style="
+      font-size: 14px; 
+      color: white; 
+      font-weight: 500;
+      user-select: none;
+      margin-bottom: 4px;
+    "
+  >
+      CTAT
+  </span>
+</div>`
       }]
     },
     {
       id: 'options',
-      buttons: [
-        {
-          id: 'oba-override',
-          command: 'oba-override',
-          label: `<svg ${iconStyle} viewBox="0 0 24 24">
-              <path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z" />
-          </svg>`
-        },{
+      buttons: [{
         id: swv,
         command: swv,
         context: swv,
@@ -158,6 +242,12 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
       }],
   }]);
 
+  let sharedContainer = document.getElementById('shared-ota-osa-container');
+if (!sharedContainer) {
+  sharedContainer = document.createElement('div');
+  sharedContainer.id = 'shared-ota-osa-container';
+  document.body.appendChild(sharedContainer);
+}
 
 
   const panelEl = document.createElement('div');
@@ -173,16 +263,20 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
   panelE3.id = 'custom-ota-panel'
   panelE4.id = 'oba-custom-panel'
   document.getElementById('gjs')?.appendChild(panelEl);
-  document.getElementById('gjs')?.appendChild(panelE2);
-  document.getElementById('gjs')?.appendChild(panelE3);
+  sharedContainer.appendChild(panelE2);
+  sharedContainer.appendChild(panelE3);
   document.getElementById('gjs')?.appendChild(panelE4);
   const style = document.createElement('style');
 style.innerHTML = `
 .gjs-pn-active .dropdown-arrow {
-  transform: rotate(180deg);
+  transform: rotate(180deg) translate(10px, 10px) !important;
 }
 
 .gjs-pn-oba-custom-panel
+{
+z-index: 2;
+}
+.gjs-pn-ctat-custom-panel
 {
 z-index: 2;
 }
@@ -201,17 +295,66 @@ z-index: 2;
     #my-custom-layers {
     position: absolute;
     left: 0px;
-    top:40px;
+    top:47px;
     margin-top: 0;
     background-color: #182444;
-    width: 200px;
+    width: 211px;
     height: 100vh;
+  animation: fall 0.2s ease-out forwards;
     }
 
+@keyframes fall {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  animation: rise 0.2s ease-in forwards !important;
+}
+
+
+@keyframes rise {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+}
+
+
     #oba-custom-panel{
-        position: absolute;
-    left: 835px;
-    top:40px;
+    left: 340px ;    
+    position: absolute;
+      z-index: 1000;
+    top:47px;
+    margin-top: 0;
+    background-color: #182444;  
+    width: 200px;
+    height: 40vh;
+    animation: fall 0.2s ease-out forwards;
+
+    }
+
+    .gjs-title{
+    display: none
+    }
+
+    #ctat-custom-panel{
+    left: 400px ;    
+    position: absolute;
+      z-index: 1000;
+    top:47px;
     margin-top: 0;
     background-color: #182444;
     width: 200px;
@@ -221,23 +364,58 @@ z-index: 2;
     #custom-ota-panel{
         position: fixed;
         right:0px;
-    top:40px;
+    top:50px;
     margin-top: 0;
     background-color: #182444;
-    width: 225px;
+    width: 15%;
     height: 10vh;
     }
 
     #custom-osa-panel{
         position: fixed;
         right:0px;
-    top:20vh;
+    top:140px;
     margin-top: 0;
     background-color: #182444;
-    width: 225px;
+    width: 15%;
     height:85vh
-    overflow:auto;
+    overflow:scroll;
     }
+       .gjs-layer-item{
+    height: 20px;
+    border-bottom: none;
+    } 
+.gjs-pn-devices-c {
+  padding: 0px;
+
+  .gjs-pn-buttons {
+    height: 100%;
+
+  }
+
+  .gjs-pn-btn {
+    margin-right: 0px;
+    height: 100%;
+    padding-left:15px;
+    padding-right:15px;
+    
+    display: flex;
+    align-items: center;
+    
+    border-right: 1px solid #1C2F61;
+    
+    &:nth-last-child(4){
+    border-right: none;
+    }
+        
+    &:nth-last-child(5){
+    border-right: none;
+    }
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
 `
   ;
   document.getElementsByTagName('head')[0].appendChild(style);
