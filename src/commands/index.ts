@@ -41,9 +41,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
           const pn = editor.Panels;
           const lmConfig = lm.getConfig();
   
-  
-          let xxx = pn.getPanel("oba-custom-panel");
-
+          layers = document.getElementById('oba-custom-panel');
           if (!layers) {
             // Create the layers container
             const layersElement = document.createElement('div');
@@ -65,16 +63,103 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             panel.set('appendContent', layersElement).trigger('change:appendContent');
             layers = layersElement;
           }
+          layers.classList.remove('rise');
   
           layers.style.display = 'block';
+          setTimeout(() => {
+            if(layers){
+        
+            let blockCategories = layers.querySelectorAll('.gjs-block-category');
+
+            if(blockCategories.length < 3){
+              layers.appendChild(editor.BlockManager.render())
+              blockCategories = layers.querySelectorAll('.gjs-block-category');
+            }
+            if (blockCategories.length >= 3) {
+              blockCategories.forEach((category:Element, index:Number) => {
+                if (index === 2) {
+                  (category as HTMLElement).style.display = 'none';
+                } else {
+                  (category as HTMLElement).style.display = 'block';
+                }
+              });
+            }}
+          }, 5);
         },
         stop() {
           if (layers) {
-            layers.style.display = 'none';
+            layers.classList.add('rise');
           }
         },
       };
     })());
+  
+    Commands.add('oba-override-2', (function () {
+      let layers: HTMLElement | null = null;
+      return {
+  
+        run(editor: any) {
+  
+          const lm = editor.BlockManager;
+          const pn = editor.Panels;
+          const lmConfig = lm.getConfig();
+          layers = document.getElementById('oba-custom-panel');
+
+          if (!layers) {
+            const layersElement = document.createElement('div');
+            layersElement.id = "oba-custom-panel";
+  
+            let panel = pn.getPanel("oba-custom-panel");
+            if (!panel) {
+              panel = pn.addPanel({
+                id: "oba-custom-panel",
+              });
+            }
+  
+            if (lmConfig.custom) {
+              lm.__trgCustom({ container: layersElement });
+            } else {
+              layersElement.appendChild(lm.render());
+            }
+  
+            panel.set('appendContent', layersElement).trigger('change:appendContent');
+            layers = layersElement;
+          }
+
+
+          layers.classList.remove('rise');
+  
+          layers.style.display = 'block';
+
+          setTimeout(() => {
+            if(layers){
+        
+            let blockCategories = layers.querySelectorAll('.gjs-block-category');
+
+            if(blockCategories.length < 3){
+              layers.appendChild(editor.BlockManager.render())
+              blockCategories = layers.querySelectorAll('.gjs-block-category');
+            }
+            if (blockCategories.length >= 3) {
+              blockCategories.forEach((category:Element, index:Number) => {
+                if (index === 2) {
+                  (category as HTMLElement).style.display = 'block';
+                } else {
+                  (category as HTMLElement).style.display = 'none';
+                }
+              });
+            }}
+          }, 5);
+        },
+        
+        stop() {
+          if (layers) {
+            layers.classList.add('rise');
+          }
+        },
+      };
+    })());
+
 
   Commands.add('ota-override', (function () {
       let layers: HTMLElement | null = null;
@@ -87,16 +172,12 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
           const lmConfig = lm.getConfig();
   
   
-          let xxx = pn.getPanel('custom-ota-panel');
-          console.log("panel");
-          console.log(xxx);
-  
           if (lmConfig.appendTo) return;
 
           if (!layers) {
             // Create the layers container
             const layersElement = document.createElement('div');
-            layersElement.id = 'custom-ota-panel'; // Optional: Assign an ID for easier debugging
+            layersElement.id = 'custom-ota-panel'; 
   
             let panel = pn.getPanel('custom-ota-panel');
             if (!panel) {
@@ -181,14 +262,14 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
 
         let xxx = pn.getPanel(TARGET_PANEL_ID);
         console.log("panel");
-        console.log(xxx);
 
         if (lmConfig.appendTo) return;
         const wrapper = editor.getWrapper();
-        console.log(wrapper)
+        
         if(wrapper && editor.getDevice() == 'Desktop'){
         wrapper.setStyle({
-          padding:'0px 0px 0px 200px'
+          padding:'0px 0px 0px 211px',
+          transition: 'padding 0.5s ease-in-out'
         });
       }
         if (!layers) {
@@ -212,21 +293,25 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
           panel.set('appendContent', layersElement).trigger('change:appendContent');
           layers = layersElement;
         }
+        layers.classList.remove('rise');
 
         layers.style.display = 'block';
       },
+      
       stop() {
         if (layers) {
-          layers.style.display = 'none';
+          layers.classList.add('rise');
           const wrapper = editor.getWrapper();
           if(wrapper)
           {
           wrapper.setStyle({
-            padding:'0px 0px 0px 0px'
+            padding:'0px 0px 0px 0px',
+            transition: 'padding 0.5s ease-in-out'
           });
         }
         }
       },
     };
   })());
+
 }
