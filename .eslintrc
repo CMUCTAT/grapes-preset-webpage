@@ -1,0 +1,21 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "amd": true
+      },
+      "extends": "eslint:recommended",
+      "globals": {
+        "define": "readonly"
+      },
+      "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+      },
+      "rules": {
+        "no-unused-vars": "off",
+        "vue/multi-word-component-names": "off"
+      },
+      "ignorePatterns": ["dist/**", "build/**"]
+  }
+  
