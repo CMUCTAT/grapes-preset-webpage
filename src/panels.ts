@@ -246,6 +246,16 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
 if (!sharedContainer) {
   sharedContainer = document.createElement('div');
   sharedContainer.id = 'shared-ota-osa-container';
+Object.assign(sharedContainer.style, {
+  position: 'fixed',
+  top: '50px',  
+  right: '0',
+  width: '15%',
+  height: 'calc(100vh - 50px)', 
+  display: 'flex',
+  flexDirection: 'column',  
+});
+
   document.body.appendChild(sharedContainer);
 }
 
@@ -372,7 +382,7 @@ z-index: 2;
     #custom-osa-panel{
         position: fixed;
         right:0px;
-    top:140px;
+    top:200px;
     margin-top: 0;
     background-color: #182444;
     width: 15%;
@@ -420,6 +430,14 @@ z-index: 2;
     aspect-ratio: 1 / 1 !important;
     min-height: 0px !important;
 }
+
+
+#custom-osa-panel{
+  flex: 1 1 auto;  
+  overflow:auto; 
+#custom-ota-panel{ max-height: 25vh; overflow:auto; }
+}
+
 `
   ;
   document.getElementsByTagName('head')[0].appendChild(style);
