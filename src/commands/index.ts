@@ -1,5 +1,4 @@
 import type { Editor } from 'grapesjs';
-// import CommandObject from 'grapesjs';
 import { RequiredPluginOptions } from '..';
 import {
   cmdClear,
@@ -9,7 +8,6 @@ import {
   TARGET_PANEL_ID,
 } from './../consts';
 import openImport from './openImport';
-
 
 export default (editor: Editor, config: RequiredPluginOptions) => {
   const { Commands } = editor;
@@ -32,48 +30,47 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
   Commands.add(cmdClear, (e: Editor) => confirm(txtConfirm) && e.runCommand('core:canvas-clear'));
 
   Commands.add('oba-override', (function () {
-      let layers: HTMLElement | null = null;
+      let blocksPanel: HTMLElement | null = null;
       return {
-  
+
         run(editor: any) {
-  
-          const lm = editor.BlockManager;
-          const pn = editor.Panels;
-          const lmConfig = lm.getConfig();
-  
-          layers = document.getElementById('oba-custom-panel');
-          if (!layers) {
-            // Create the layers container
-            const layersElement = document.createElement('div');
-            layersElement.id = "oba-custom-panel"; // Optional: Assign an ID for easier debugging
-  
-            let panel = pn.getPanel("oba-custom-panel");
+
+          const blockManager = editor.BlockManager;
+          const panelManager = editor.Panels;
+          const blockManagerConfig = blockManager.getConfig();
+
+          blocksPanel = document.getElementById('oba-custom-panel');
+          if (!blocksPanel) {
+            const blocksPanelElement = document.createElement('div');
+            blocksPanelElement.id = "oba-custom-panel";
+
+            let panel = panelManager.getPanel("oba-custom-panel");
             if (!panel) {
-              panel = pn.addPanel({
+              panel = panelManager.addPanel({
                 id: "oba-custom-panel",
               });
             }
-  
-            if (lmConfig.custom) {
-              lm.__trgCustom({ container: layersElement });
+
+            if (blockManagerConfig.custom) {
+              blockManager.__trgCustom({ container: blocksPanelElement });
             } else {
-              layersElement.appendChild(lm.render());
+              blocksPanelElement.appendChild(blockManager.render());
             }
-  
-            panel.set('appendContent', layersElement).trigger('change:appendContent');
-            layers = layersElement;
+
+            panel.set('appendContent', blocksPanelElement).trigger('change:appendContent');
+            blocksPanel = blocksPanelElement;
           }
-          layers.classList.remove('rise');
-  
-          layers.style.display = 'block';
+          blocksPanel.classList.remove('rise');
+
+          blocksPanel.style.display = 'block';
           setTimeout(() => {
-            if(layers){
+            if(blocksPanel){
         
-            let blockCategories = layers.querySelectorAll('.gjs-block-category');
+            let blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
 
             if(blockCategories.length < 3){
-              layers.appendChild(editor.BlockManager.render())
-              blockCategories = layers.querySelectorAll('.gjs-block-category');
+              blocksPanel.appendChild(editor.BlockManager.render())
+              blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
             }
             if (blockCategories.length >= 3) {
               blockCategories.forEach((category:Element, index:Number) => {
@@ -87,58 +84,58 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
           }, 5);
         },
         stop() {
-          if (layers) {
-            layers.classList.add('rise');
+          if (blocksPanel) {
+            blocksPanel.classList.add('rise');
           }
         },
       };
     })());
   
     Commands.add('oba-override-2', (function () {
-      let layers: HTMLElement | null = null;
+      let ctatBlocksPanel: HTMLElement | null = null;
       return {
-  
-        run(editor: any) {
-  
-          const lm = editor.BlockManager;
-          const pn = editor.Panels;
-          const lmConfig = lm.getConfig();
-          layers = document.getElementById('oba-custom-panel');
 
-          if (!layers) {
-            const layersElement = document.createElement('div');
-            layersElement.id = "oba-custom-panel";
-  
-            let panel = pn.getPanel("oba-custom-panel");
+        run(editor: any) {
+
+          const blockManager = editor.BlockManager;
+          const panelManager = editor.Panels;
+          const blockManagerConfig = blockManager.getConfig();
+          ctatBlocksPanel = document.getElementById('oba-custom-panel');
+
+          if (!ctatBlocksPanel) {
+            const ctatBlocksPanelElement = document.createElement('div');
+            ctatBlocksPanelElement.id = "oba-custom-panel";
+
+            let panel = panelManager.getPanel("oba-custom-panel");
             if (!panel) {
-              panel = pn.addPanel({
+              panel = panelManager.addPanel({
                 id: "oba-custom-panel",
               });
             }
-  
-            if (lmConfig.custom) {
-              lm.__trgCustom({ container: layersElement });
+
+            if (blockManagerConfig.custom) {
+              blockManager.__trgCustom({ container: ctatBlocksPanelElement });
             } else {
-              layersElement.appendChild(lm.render());
+              ctatBlocksPanelElement.appendChild(blockManager.render());
             }
-  
-            panel.set('appendContent', layersElement).trigger('change:appendContent');
-            layers = layersElement;
+
+            panel.set('appendContent', ctatBlocksPanelElement).trigger('change:appendContent');
+            ctatBlocksPanel = ctatBlocksPanelElement;
           }
 
 
-          layers.classList.remove('rise');
-  
-          layers.style.display = 'block';
+          ctatBlocksPanel.classList.remove('rise');
+
+          ctatBlocksPanel.style.display = 'block';
 
           setTimeout(() => {
-            if(layers){
+            if(ctatBlocksPanel){
         
-            let blockCategories = layers.querySelectorAll('.gjs-block-category');
+            let blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
 
             if(blockCategories.length < 3){
-              layers.appendChild(editor.BlockManager.render())
-              blockCategories = layers.querySelectorAll('.gjs-block-category');
+              ctatBlocksPanel.appendChild(editor.BlockManager.render())
+              blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
             }
             if (blockCategories.length >= 3) {
               blockCategories.forEach((category:Element, index:Number) => {
@@ -153,8 +150,8 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
         },
         
         stop() {
-          if (layers) {
-            layers.classList.add('rise');
+          if (ctatBlocksPanel) {
+            ctatBlocksPanel.classList.add('rise');
           }
         },
       };
@@ -162,41 +159,40 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
 
 
   Commands.add('ota-override', (function () {
-      let layers: HTMLElement | null = null;
+      let traitPanel: HTMLElement | null = null;
       return {
-  
-        run(editor: any) {
-  
-          const lm = editor.TraitManager;
-          const pn = editor.Panels;
-          const lmConfig = lm.getConfig();
-  
-  
-          if (lmConfig.appendTo) return;
 
-          if (!layers) {
-            // Create the layers container
-            const layersElement = document.createElement('div');
-            layersElement.id = 'custom-ota-panel'; 
+        run(editor: any) {
+
+          const traitManager = editor.TraitManager;
+          const panelManager = editor.Panels;
+          const traitManagerConfig = traitManager.getConfig();
+
+
+          if (traitManagerConfig.appendTo) return;
+
+          if (!traitPanel) {
+            const traitPanelElement = document.createElement('div');
+            traitPanelElement.id = 'custom-ota-panel'; 
   
-            let panel = pn.getPanel('custom-ota-panel');
+            let panel = panelManager.getPanel('custom-ota-panel');
             if (!panel) {
-              panel = pn.addPanel({
+              panel = panelManager.addPanel({
                 id: 'custom-ota-panel',
               });
             }
-  
-            if (lmConfig.custom) {
-              lm.__trgCustom({ container: layersElement });
+
+            if (traitManagerConfig.custom) {
+              traitManager.__trgCustom({ container: traitPanelElement });
             } else {
-              layersElement.appendChild(lm.render());
+              traitPanelElement.appendChild(traitManager.render());
             }
-  
-            panel.set('appendContent', layersElement).trigger('change:appendContent');
-            layers = layersElement;
+
+            panel.set('appendContent', traitPanelElement).trigger('change:appendContent');
+            traitPanel = traitPanelElement;
           }
-  
-          layers.style.display = 'block';
+
+          traitPanel.style.display = 'block';
         },
         stop() {
         },
@@ -204,43 +200,41 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
     })());
   
   Commands.add('osa-override', (function () {
-      let layers: HTMLElement | null = null;
+      let stylePanel: HTMLElement | null = null;
       return {
-  
+
         run(editor: any) {
-  
-          const lm = editor.StyleManager;
-          const pn = editor.Panels;
-          const lmConfig = lm.getConfig();
-  
-  
-          let xxx = pn.getPanel('custom-osa-panel');
-          console.log("panel");
-          console.log(xxx);
-  
-          if (lmConfig.appendTo) return;
-          if (!layers) {
-            const layersElement = document.createElement('div');
-            layersElement.id = 'custom-osa-panel';
-  
-            let panel = pn.getPanel('custom-osa-panel');
+
+          const styleManager = editor.StyleManager;
+          const panelManager = editor.Panels;
+          const styleManagerConfig = styleManager.getConfig();
+
+
+          let panelInfo = panelManager.getPanel('custom-osa-panel');
+
+          if (styleManagerConfig.appendTo) return;
+          if (!stylePanel) {
+            const stylePanelElement = document.createElement('div');
+            stylePanelElement.id = 'custom-osa-panel';
+
+            let panel = panelManager.getPanel('custom-osa-panel');
             if (!panel) {
-              panel = pn.addPanel({
+              panel = panelManager.addPanel({
                 id: 'custom-osa-panel',
               });
             }
-  
-            if (lmConfig.custom) {
-              lm.__trgCustom({ container: layersElement });
+
+            if (styleManagerConfig.custom) {
+              styleManager.__trgCustom({ container: stylePanelElement });
             } else {
-              layersElement.appendChild(lm.render());
+              stylePanelElement.appendChild(styleManager.render());
             }
-  
-            panel.set('appendContent', layersElement).trigger('change:appendContent');
-            layers = layersElement;
+
+            panel.set('appendContent', stylePanelElement).trigger('change:appendContent');
+            stylePanel = stylePanelElement;
           }
-  
-          layers.style.display = 'block';
+
+          stylePanel.style.display = 'block';
         },
         stop() {
 
@@ -250,20 +244,19 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
   
   
   editor.Commands.add('ola-override', (function () {
-    let layers: HTMLElement | null = null;
+    let layersPanel: HTMLElement | null = null;
     return {
 
       run(editor: any) {
 
-        const lm = editor.LayerManager;
-        const pn = editor.Panels;
-        const lmConfig = lm.getConfig();
+        const layerManager = editor.LayerManager;
+        const panelManager = editor.Panels;
+        const layerManagerConfig = layerManager.getConfig();
 
 
-        let xxx = pn.getPanel(TARGET_PANEL_ID);
-        console.log("panel");
+        let panelInfo = panelManager.getPanel(TARGET_PANEL_ID);
 
-        if (lmConfig.appendTo) return;
+        if (layerManagerConfig.appendTo) return;
         const wrapper = editor.getWrapper();
         
         if(wrapper && editor.getDevice() == 'Desktop'){
@@ -272,35 +265,34 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
           transition: 'padding 0.5s ease-in-out'
         });
       }
-        if (!layers) {
-          // Create the layers container
-          const layersElement = document.createElement('div');
-          layersElement.id = 'my-custom-layers'; // Optional: Assign an ID for easier debugging
+        if (!layersPanel) {
+          const layersPanelElement = document.createElement('div');
+          layersPanelElement.id = 'my-custom-layers';
 
-          let panel = pn.getPanel(TARGET_PANEL_ID);
+          let panel = panelManager.getPanel(TARGET_PANEL_ID);
           if (!panel) {
-            panel = pn.addPanel({
+            panel = panelManager.addPanel({
               id: TARGET_PANEL_ID,
             });
           }
 
-          if (lmConfig.custom) {
-            lm.__trgCustom({ container: layersElement });
+          if (layerManagerConfig.custom) {
+            layerManager.__trgCustom({ container: layersPanelElement });
           } else {
-            layersElement.appendChild(lm.render());
+            layersPanelElement.appendChild(layerManager.render());
           }
 
-          panel.set('appendContent', layersElement).trigger('change:appendContent');
-          layers = layersElement;
+          panel.set('appendContent', layersPanelElement).trigger('change:appendContent');
+          layersPanel = layersPanelElement;
         }
-        layers.classList.remove('rise');
+        layersPanel.classList.remove('rise');
 
-        layers.style.display = 'block';
+        layersPanel.style.display = 'block';
       },
       
       stop() {
-        if (layers) {
-          layers.classList.add('rise');
+        if (layersPanel) {
+          layersPanel.classList.add('rise');
           const wrapper = editor.getWrapper();
           if(wrapper)
           {
