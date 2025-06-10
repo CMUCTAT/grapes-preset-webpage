@@ -182,8 +182,29 @@ const panelStyles = `
   border-bottom: none;
 }
 
+.gjs-pn-layers-toggle {
+  position: absolute;
+  left: 0px;
+  min-width: 180px;
+}
+
+.gjs-pn-layers-toggle .gjs-pn-buttons {
+  height: 100%;
+}
+
+.gjs-pn-layers-toggle .gjs-pn-btn {
+  margin-right: 0px;
+  height: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid #1C2F61;
+}
+
 .gjs-pn-devices-c {
-  padding: 0px;
+  position: absolute;
+  left: 180px;
 }
 
 .gjs-pn-devices-c .gjs-pn-buttons {
@@ -238,11 +259,6 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
   const commandPanelButtons = [{}];
   
   const devicePanelButtons = [
-    {
-      id: ola,
-      command: "ola-override",
-      label: createDropdownContent('Layers')
-    },
     {
       id: cmdDeviceDesktop,
       command: cmdDeviceDesktop,
@@ -321,6 +337,16 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
     {
       id: 'commands',
       buttons: commandPanelButtons,
+    },
+    {
+      id: 'layers-toggle',
+      buttons: [
+        {
+          id: ola,
+          command: "ola-override",
+          label: createDropdownContent('Layers')
+        }
+      ]
     },
     {
       id: 'devices-c',

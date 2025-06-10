@@ -243,7 +243,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
     })());
   
   
-  editor.Commands.add('ola-override', (function () {
+  Commands.add('ola-override', (function () {
     let layersPanel: HTMLElement | null = null;
     return {
 
@@ -305,5 +305,5 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
       },
     };
   })());
-
+  
 }
