@@ -6,6 +6,7 @@ import {
   cmdDeviceMobile,
   cmdDeviceTablet,
   TARGET_PANEL_ID,
+  LEFT_PANEL_WIDTH,
 } from './../consts';
 import openImport from './openImport';
 
@@ -261,7 +262,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
         
         if(wrapper && editor.getDevice() == 'Desktop'){
         wrapper.setStyle({
-          padding:'0px 0px 0px 211px',
+          padding:`0px 0px 0px ${LEFT_PANEL_WIDTH}`,
           transition: 'padding 0.5s ease-in-out'
         });
       }

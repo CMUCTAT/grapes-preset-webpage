@@ -8,6 +8,7 @@ import {
   cmdDeviceMobile,
   cmdClear,
   TARGET_PANEL_ID,
+  LEFT_PANEL_WIDTH,
 } from './consts';
 
 const ICONS = {
@@ -81,18 +82,6 @@ const panelStyles = `
 .gjs-pn-custom-ota-panel,
 .gjs-pn-custom-osa-panel {
   z-index: 2;
-}
-
-#my-custom-layers {
-  position: absolute;
-  left: 0px;
-  top: 47px;
-  margin-top: 0;
-  background-color: #182444;
-  min-width: 211px;
-  width: fit-content;
-  height: 100vh;
-  animation: fall 0.2s ease-out forwards;
 }
 
 @keyframes fall {
@@ -175,6 +164,19 @@ const panelStyles = `
 #custom-ota-panel {
   max-height: 25vh;
   overflow: auto;
+}
+
+#my-custom-layers {
+  margin-top: 41px;
+  margin-left: -5px;
+  background-color: #182444;
+  width: fit-content;
+  min-width: ${LEFT_PANEL_WIDTH};
+  max-width: 350px;
+  height: calc(100vh - 41px);
+  animation: fall 0.2s ease-out forwards;
+  overflow: auto;
+  padding: 10px 10px 20px 10px;
 }
 
 .gjs-layer-item {

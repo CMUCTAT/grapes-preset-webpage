@@ -4,3 +4,4 @@ export const cmdDeviceTablet = 'set-device-tablet';
 export const cmdDeviceMobile = 'set-device-mobile';
 export const cmdClear = 'canvas-clear';
 export const TARGET_PANEL_ID = 'my-custom-panel';
+export const LEFT_PANEL_WIDTH = '240px';
