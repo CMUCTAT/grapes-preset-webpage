@@ -278,6 +278,24 @@ export default (editor, opts = {}) => {
       label:'Value',
       placeholder: '1/2+1/4+(0*1/8)',
     },
+    {
+      type: 'text',
+      name: 'data-ctat-ctrl-denominator',
+      label: "Denominator",
+      placeholder: '',
+    }, 
+    {
+      type: 'text',
+      name: 'data-ctat-ctrl-numerator',
+      label: "Numerator",
+      placeholder: '',
+    }, 
+    {
+      type: 'text',
+      name: 'data-ctat-ctrl-partition',
+      label: "Partition",
+      placeholder: '',
+    }, 
   ].concat(CTATTraits)));  
 
   domc.addType('CTATGroupingComponent', new CTATComponentDef('CTATGroupingComponent', [

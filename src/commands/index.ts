@@ -160,6 +160,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
 
   Commands.add('ota-override', (function () {
       let traitPanel: HTMLElement | null = null;
+      let titleElement: HTMLElement | null = null;
       return {
 
         run(editor: any) {
@@ -174,7 +175,22 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
           if (!traitPanel) {
             const traitPanelElement = document.createElement('div');
             traitPanelElement.id = 'custom-ota-panel'; 
-  
+
+          // Create a title element for the selected component
+          titleElement = document.createElement('div');
+          titleElement.id = 'ota-title';
+          titleElement.style.cssText = `
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #182444;
+            color: white;
+            text-align: center;
+            border-bottom: 1px solid #1C2F61;
+          `;
+          titleElement.innerText = 'No Component Selected'; // Default text
+          traitPanelElement.appendChild(titleElement);
+
             let panel = panelManager.getPanel('custom-ota-panel');
             if (!panel) {
               panel = panelManager.addPanel({
@@ -191,10 +207,27 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             panel.set('appendContent', traitPanelElement).trigger('change:appendContent');
             traitPanel = traitPanelElement;
           }
-
           traitPanel.style.display = 'block';
+
+          // Update the title dynamically when a component is selected
+          editor.on('component:selected', (component: any) => {
+            if (titleElement) {
+              const componentName = component?.get('type') || 'Unnamed Component';
+              titleElement.innerText = `Selected: ${componentName}`;
+            }
+          });
+
+          // Reset the title when no component is selected
+          editor.on('component:deselected', () => {
+            if (titleElement) {
+              titleElement.innerText = 'No Component Selected';
+            }
+          });
         },
         stop() {
+          if (traitPanel) {
+            traitPanel.style.display = 'none';
+          }
         },
       };
     })());

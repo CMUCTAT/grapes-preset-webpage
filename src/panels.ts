@@ -78,7 +78,10 @@ const panelStyles = `
 .gjs-pn-oba-custom-panel,
 .gjs-pn-ctat-custom-panel,
 .gjs-pn-my-custom-panel,
-.gjs-pn-custom-ota-panel,
+.gjs-pn-custom-ota-panel {
+  z-index: 2;
+}
+
 .gjs-pn-custom-osa-panel {
   z-index: 2;
 }
@@ -157,14 +160,14 @@ const panelStyles = `
   margin-top: 0;
   background-color: #182444;
   width: 15%;
-  height: 10vh;
+  height: 100vh;
 }
 
 #custom-osa-panel {
   position: fixed;
   right: 0px;
   top: 200px;
-  margin-top: 0;
+  margin-top: 20vh;
   background-color: #182444;
   width: 15%;
   height: 85vh;
