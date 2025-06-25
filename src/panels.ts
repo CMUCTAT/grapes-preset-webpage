@@ -167,10 +167,10 @@ const panelStyles = `
   position: fixed;
   right: 0px;
   top: 200px;
-  margin-top: 20vh;
+  margin-top: 10vh;
   background-color: #182444;
   width: 15%;
-  height: 85vh;
+  height: 70vh;
   overflow: auto;
   flex: 1 1 auto;
 }
