@@ -286,8 +286,6 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
         const layerManager = editor.LayerManager;
         const panelManager = editor.Panels;
         const layerManagerConfig = layerManager.getConfig();
-
-
         let panelInfo = panelManager.getPanel(TARGET_PANEL_ID);
 
         if (layerManagerConfig.appendTo) return;

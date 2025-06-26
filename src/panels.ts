@@ -9,6 +9,8 @@ import {
   cmdClear,
   TARGET_PANEL_ID,
   LEFT_PANEL_WIDTH,
+  CUSTOM_OTA_PANEL_MARGIN_TOP,
+  CUSTOM_OTA_PANEL_HEIGHT,
 } from './consts';
 
 const ICONS = {
@@ -48,7 +50,7 @@ const createDropdownContent = (label: string, width: string = '180px') => {
     height="24"  
     viewBox="0 0 350 350" 
     style="
-      fill: white; 
+      fill: var(--gjs-font-color); 
       transition: transform 0.3s ease;
       transform: translate(5px, 5px)
     "
@@ -60,7 +62,7 @@ const createDropdownContent = (label: string, width: string = '180px') => {
     class="layers-button-text" 
     style="
       font-size: 14px; 
-      color: white; 
+      color: var(--gjs-font-color); 
       font-weight: 500;
       user-select: none;
       margin-bottom: 4px;
@@ -145,28 +147,30 @@ const panelStyles = `
 #custom-ota-panel {
   position: fixed;
   right: 0px;
-  top: 50px;
-  margin-top: 0;
+  top: ${CUSTOM_OTA_PANEL_MARGIN_TOP};
   background-color: #182444;
   width: 15%;
-  height: 100vh;
+  height: ${CUSTOM_OTA_PANEL_HEIGHT};
+  overflow: auto;
+  padding: 10px 0px;
 }
 
 #custom-osa-panel {
   position: fixed;
   right: 0px;
-  top: 200px;
-  margin-top: 10vh;
+  top: calc(${CUSTOM_OTA_PANEL_MARGIN_TOP} + ${CUSTOM_OTA_PANEL_HEIGHT});
+  margin-top: 0;
   background-color: #182444;
   width: 15%;
-  height: 70vh;
+  height: calc(100vh - ${CUSTOM_OTA_PANEL_MARGIN_TOP} - ${CUSTOM_OTA_PANEL_HEIGHT});
   overflow: auto;
   flex: 1 1 auto;
+  padding: 10px 0px;
 }
 
-#custom-ota-panel {
-  max-height: 25vh;
-  overflow: auto;
+#custom-osa-panel .btn {
+    color: var(--gjs-font-color);
+    width: 100%;
 }
 
 #my-custom-layers {
@@ -176,10 +180,14 @@ const panelStyles = `
   width: fit-content;
   min-width: ${LEFT_PANEL_WIDTH};
   max-width: 350px;
-  height: calc(100vh - 41px);
+  height: calc(90vh - var(--gjs-canvas-top));
   animation: fall 0.2s ease-out forwards;
   overflow: auto;
   padding: 10px 10px 20px 10px;
+}
+
+.gjs-layer > :not(.gjs-layer-item):not(.gjs-layer-children) {
+  display: none;
 }
 
 .gjs-layer-item {
