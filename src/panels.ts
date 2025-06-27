@@ -9,7 +9,6 @@ import {
   cmdClear,
   TARGET_PANEL_ID,
   LEFT_PANEL_WIDTH,
-  CUSTOM_OTA_PANEL_MARGIN_TOP,
   CUSTOM_OTA_PANEL_HEIGHT,
 } from './consts';
 
@@ -118,10 +117,10 @@ const panelStyles = `
 }
 
 #oba-custom-panel {
+  top: var(--gjs-canvas-top);
   left: 340px;    
   position: absolute;
   z-index: 1000;
-  top: 47px;
   margin-top: 0;
   background-color: #182444;  
   width: 500px;
@@ -137,7 +136,7 @@ const panelStyles = `
   left: 400px;    
   position: absolute;
   z-index: 1000;
-  top: 47px;
+  top: var(--gjs-canvas-top);
   margin-top: 0;
   background-color: #182444;
   width: 200px;
@@ -145,24 +144,22 @@ const panelStyles = `
 }
 
 #custom-ota-panel {
-  position: fixed;
-  right: 0px;
-  top: ${CUSTOM_OTA_PANEL_MARGIN_TOP};
+  position: absolute;
+  top: var(--gjs-canvas-top);
   background-color: #182444;
-  width: 15%;
+  width: 100%;
   height: ${CUSTOM_OTA_PANEL_HEIGHT};
   overflow: auto;
   padding: 10px 0px;
 }
 
 #custom-osa-panel {
-  position: fixed;
-  right: 0px;
-  top: calc(${CUSTOM_OTA_PANEL_MARGIN_TOP} + ${CUSTOM_OTA_PANEL_HEIGHT});
+  position: absolute;
+  top: calc(var(--gjs-canvas-top) + ${CUSTOM_OTA_PANEL_HEIGHT});
   margin-top: 0;
   background-color: #182444;
-  width: 15%;
-  height: calc(100vh - ${CUSTOM_OTA_PANEL_MARGIN_TOP} - ${CUSTOM_OTA_PANEL_HEIGHT});
+  width: 100%;
+  height: calc(90vh - var(--gjs-canvas-top) - ${CUSTOM_OTA_PANEL_HEIGHT});
   overflow: auto;
   flex: 1 1 auto;
   padding: 10px 0px;
@@ -174,7 +171,8 @@ const panelStyles = `
 }
 
 #my-custom-layers {
-  margin-top: 41px;
+  position: absolute;
+  top: var(--gjs-canvas-top);
   margin-left: -5px;
   background-color: #182444;
   width: fit-content;
@@ -388,7 +386,10 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
         flexDirection: 'column',  
       });
       
-      document.body.appendChild(sharedContainer);
+      const editorContainer = document.getElementById('gjs');
+      if (editorContainer) {
+        editorContainer.appendChild(sharedContainer);
+      }
     }
     
     return sharedContainer;
