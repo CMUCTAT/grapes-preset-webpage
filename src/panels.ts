@@ -101,8 +101,12 @@ const panelStyles = `
   }
 }
 
+.opening {
+  animation: fall 0.1s ease-out forwards !important;
+}
+
 .rise {
-  animation: rise 0.2s ease-in forwards !important;
+  animation: rise 0.1s ease-in forwards !important;
 }
 
 @keyframes rise {
@@ -118,14 +122,12 @@ const panelStyles = `
 
 #oba-custom-panel {
   top: var(--gjs-canvas-top);
-  left: 340px;    
   position: absolute;
   z-index: 1000;
   margin-top: 0;
   background-color: #182444;  
   width: 500px;
   height: 40vh;
-  animation: fall 0.2s ease-out forwards;
 }
 
 .gjs-title {
@@ -173,13 +175,13 @@ const panelStyles = `
 #my-custom-layers {
   position: absolute;
   top: var(--gjs-canvas-top);
+  left: 0px;
   margin-left: -5px;
   background-color: #182444;
   width: fit-content;
   min-width: ${LEFT_PANEL_WIDTH};
   max-width: 350px;
   height: calc(90vh - var(--gjs-canvas-top));
-  animation: fall 0.2s ease-out forwards;
   overflow: auto;
   padding: 10px 10px 20px 10px;
 }
