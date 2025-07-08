@@ -102,11 +102,11 @@ const panelStyles = `
 }
 
 .opening {
-  animation: fall 0.1s ease-out forwards !important;
+  animation: fall 0.2s ease-out forwards !important;
 }
 
 .rise {
-  animation: rise 0.1s ease-in forwards !important;
+  animation: rise 0.2s ease-in forwards !important;
 }
 
 @keyframes rise {

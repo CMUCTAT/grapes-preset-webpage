@@ -10,6 +10,8 @@ import {
 } from './../consts';
 import openImport from './openImport';
 
+let activeOba: "" | "basics" | "ctat" = "";
+
 export default (editor: Editor, config: RequiredPluginOptions) => {
   const { Commands } = editor;
   const txtConfirm = config.textCleanCanvas;
@@ -35,77 +37,79 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
       return {
 
         run(editor: any) {
-          setTimeout(() => {
+          activeOba = "basics";
 
-            const blockManager = editor.BlockManager;
-            const panelManager = editor.Panels;
-            const blockManagerConfig = blockManager.getConfig();
+          const blockManager = editor.BlockManager;
+          const panelManager = editor.Panels;
+          const blockManagerConfig = blockManager.getConfig();
 
-            blocksPanel = document.getElementById('oba-custom-panel');
-            if (!blocksPanel) {
-              const blocksPanelElement = document.createElement('div');
-              blocksPanelElement.id = "oba-custom-panel";
+          blocksPanel = document.getElementById('oba-custom-panel');
+          if (!blocksPanel) {
+            const blocksPanelElement = document.createElement('div');
+            blocksPanelElement.id = "oba-custom-panel";
 
-              let panel = panelManager.getPanel("oba-custom-panel");
-              if (!panel) {
-                panel = panelManager.addPanel({
-                  id: "oba-custom-panel",
-                });
-              }
-
-              if (blockManagerConfig.custom) {
-                blockManager.__trgCustom({ container: blocksPanelElement });
-              } else {
-                blocksPanelElement.appendChild(blockManager.render());
-              }
-
-              panel.set('appendContent', blocksPanelElement).trigger('change:appendContent');
-              blocksPanel = blocksPanelElement;
+            let panel = panelManager.getPanel("oba-custom-panel");
+            if (!panel) {
+              panel = panelManager.addPanel({
+                id: "oba-custom-panel",
+              });
             }
-            
-            blocksPanel.classList.remove('rise');
-            blocksPanel.classList.add('opening');
-            
-            blocksPanel.style.display = 'block';
 
-            blocksPanel.addEventListener('animationend', () => {
-                  if (!blocksPanel) return;
-                  blocksPanel.classList.remove('opening');
-                }, { once: true });
-            setTimeout(() => {
-              if(blocksPanel){
-          
+            if (blockManagerConfig.custom) {
+              blockManager.__trgCustom({ container: blocksPanelElement });
+            } else {
+              blocksPanelElement.appendChild(blockManager.render());
+            }
+
+            panel.set('appendContent', blocksPanelElement).trigger('change:appendContent');
+            blocksPanel = blocksPanelElement;
+          }
+
+          blocksPanel.classList.remove('rise');
+          blocksPanel.classList.add('opening');
+
+          blocksPanel.style.display = 'block';
+
+          blocksPanel.addEventListener('animationend', () => {
+            if (!blocksPanel) return;
+            blocksPanel.classList.remove('opening');
+          }, { once: true });
+          setTimeout(() => {
+            if (blocksPanel) {
+
               let blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
 
-              if(blockCategories.length < 3){
+              if (blockCategories.length < 3) {
                 blocksPanel.appendChild(editor.BlockManager.render())
                 blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
               }
               if (blockCategories.length >= 3) {
-                blockCategories.forEach((category:Element, index:Number) => {
+                blockCategories.forEach((category: Element, index: Number) => {
                   if (index === 2) {
                     (category as HTMLElement).style.display = 'none';
                   } else {
                     (category as HTMLElement).style.display = 'block';
                   }
                 });
-              }}
-            }, 5);
-
-          }, 150);
+              }
+            }
+          }, 5);
         },
         stop() {
           if (!blocksPanel) return;
 
-          // Trigger the close animation, then hide
-          blocksPanel.classList.remove('opening');
-          blocksPanel.classList.add('rise');
-
-            blocksPanel.addEventListener('animationend', () => {
-              if (!blocksPanel) return;
-              blocksPanel.style.display = 'none';
-              blocksPanel.classList.remove('rise');
-            }, { once: true });
+          setTimeout(() => {
+            if (!blocksPanel) return;
+            if (activeOba !== "ctat") {
+              activeOba = "";
+              blocksPanel.classList.remove('opening');
+              blocksPanel.classList.add('rise');
+              blocksPanel.addEventListener('animationend', () => {
+                if (!blocksPanel) return;
+                blocksPanel.style.display = 'none';
+              }, { once: true });
+            }
+          }, 100);
         },
       };
     })());
@@ -115,80 +119,81 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
       return {
 
         run(editor: any) {
-          setTimeout(() => {
+          activeOba = "ctat";
 
-            const blockManager = editor.BlockManager;
-            const panelManager = editor.Panels;
-            const blockManagerConfig = blockManager.getConfig();
-            ctatBlocksPanel = document.getElementById('oba-custom-panel');
+          const blockManager = editor.BlockManager;
+          const panelManager = editor.Panels;
+          const blockManagerConfig = blockManager.getConfig();
+          ctatBlocksPanel = document.getElementById('oba-custom-panel');
 
-            if (!ctatBlocksPanel) {
-              const ctatBlocksPanelElement = document.createElement('div');
-              ctatBlocksPanelElement.id = "oba-custom-panel";
+          if (!ctatBlocksPanel) {
+            const ctatBlocksPanelElement = document.createElement('div');
+            ctatBlocksPanelElement.id = "oba-custom-panel";
 
-              let panel = panelManager.getPanel("oba-custom-panel");
-              if (!panel) {
-                panel = panelManager.addPanel({
-                  id: "oba-custom-panel",
-                });
-              }
-
-              if (blockManagerConfig.custom) {
-                blockManager.__trgCustom({ container: ctatBlocksPanelElement });
-              } else {
-                ctatBlocksPanelElement.appendChild(blockManager.render());
-              }
-
-              panel.set('appendContent', ctatBlocksPanelElement).trigger('change:appendContent');
-              ctatBlocksPanel = ctatBlocksPanelElement;
+            let panel = panelManager.getPanel("oba-custom-panel");
+            if (!panel) {
+              panel = panelManager.addPanel({
+                id: "oba-custom-panel",
+              });
             }
 
-            ctatBlocksPanel.classList.remove('rise');
-            ctatBlocksPanel.classList.add('opening');
-            
-            ctatBlocksPanel.style.display = 'block';
+            if (blockManagerConfig.custom) {
+              blockManager.__trgCustom({ container: ctatBlocksPanelElement });
+            } else {
+              ctatBlocksPanelElement.appendChild(blockManager.render());
+            }
 
-            ctatBlocksPanel.addEventListener('animationend', () => {
-                  if (!ctatBlocksPanel) return;
-                  ctatBlocksPanel.classList.remove('opening');
-                }, { once: true });
+            panel.set('appendContent', ctatBlocksPanelElement).trigger('change:appendContent');
+            ctatBlocksPanel = ctatBlocksPanelElement;
+          }
 
-            setTimeout(() => {
-              if(ctatBlocksPanel){
-                
+          ctatBlocksPanel.classList.remove('rise');
+          ctatBlocksPanel.classList.add('opening');
+
+          ctatBlocksPanel.style.display = 'block';
+
+          ctatBlocksPanel.addEventListener('animationend', () => {
+            if (!ctatBlocksPanel) return;
+            ctatBlocksPanel.classList.remove('opening');
+          }, { once: true });
+
+          setTimeout(() => {
+            if (ctatBlocksPanel) {
+
               let blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
 
-              if(blockCategories.length < 3){
+              if (blockCategories.length < 3) {
                 ctatBlocksPanel.appendChild(editor.BlockManager.render())
                 blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
               }
               if (blockCategories.length >= 3) {
-                blockCategories.forEach((category:Element, index:Number) => {
+                blockCategories.forEach((category: Element, index: Number) => {
                   if (index === 2) {
                     (category as HTMLElement).style.display = 'block';
                   } else {
                     (category as HTMLElement).style.display = 'none';
                   }
                 });
-              }}
-            }, 5);
-            
-          }, 150);
+              }
+            }
+          }, 5);
         },
         
         stop() {
           if (!ctatBlocksPanel) return;
 
-          // Trigger the close animation, then hide
-          ctatBlocksPanel.classList.remove('opening');
-          ctatBlocksPanel.classList.add('rise');
-
-          if (!ctatBlocksPanel) return;
-            ctatBlocksPanel.addEventListener('animationend', () => {
+          setTimeout(() => {
             if (!ctatBlocksPanel) return;
-            ctatBlocksPanel.style.display = 'none';
-            ctatBlocksPanel.classList.remove('rise');
-          }, { once: true });
+            if (activeOba !== "basics") {
+              activeOba = "";
+              ctatBlocksPanel.classList.remove('opening');
+              ctatBlocksPanel.classList.add('rise');
+              ctatBlocksPanel.addEventListener('animationend', () => {
+                if (!ctatBlocksPanel) return;
+                ctatBlocksPanel.style.display = 'none';
+              }, { once: true });
+            }
+          }, 100);
         },
       };
     })());
