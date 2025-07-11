@@ -65,15 +65,8 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             blocksPanel = blocksPanelElement;
           }
 
-          blocksPanel.classList.remove('rise');
-          blocksPanel.classList.add('opening');
-
           blocksPanel.style.display = 'block';
 
-          blocksPanel.addEventListener('animationend', () => {
-            if (!blocksPanel) return;
-            blocksPanel.classList.remove('opening');
-          }, { once: true });
           setTimeout(() => {
             if (blocksPanel) {
 
@@ -100,16 +93,10 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
 
           setTimeout(() => {
             if (!blocksPanel) return;
-            if (activeOba !== "ctat") {
-              activeOba = "";
-              blocksPanel.classList.remove('opening');
-              blocksPanel.classList.add('rise');
-              blocksPanel.addEventListener('animationend', () => {
-                if (!blocksPanel) return;
-                blocksPanel.style.display = 'none';
-              }, { once: true });
+            if (activeOba === "basics") {
+              blocksPanel.style.display = 'none';
             }
-          }, 100);
+          }, 150);
         },
       };
     })());
@@ -147,15 +134,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             ctatBlocksPanel = ctatBlocksPanelElement;
           }
 
-          ctatBlocksPanel.classList.remove('rise');
-          ctatBlocksPanel.classList.add('opening');
-
           ctatBlocksPanel.style.display = 'block';
-
-          ctatBlocksPanel.addEventListener('animationend', () => {
-            if (!ctatBlocksPanel) return;
-            ctatBlocksPanel.classList.remove('opening');
-          }, { once: true });
 
           setTimeout(() => {
             if (ctatBlocksPanel) {
@@ -184,16 +163,10 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
 
           setTimeout(() => {
             if (!ctatBlocksPanel) return;
-            if (activeOba !== "basics") {
-              activeOba = "";
-              ctatBlocksPanel.classList.remove('opening');
-              ctatBlocksPanel.classList.add('rise');
-              ctatBlocksPanel.addEventListener('animationend', () => {
-                if (!ctatBlocksPanel) return;
-                ctatBlocksPanel.style.display = 'none';
-              }, { once: true });
+            if (activeOba === "ctat") {
+              ctatBlocksPanel.style.display = 'none';
             }
-          }, 100);
+          }, 150);
         },
       };
     })());
