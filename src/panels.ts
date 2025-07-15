@@ -85,6 +85,7 @@ const panelStyles = `
 
 .gjs-pn-custom-osa-panel {
   z-index: 2;
+  text-align: left
 }
 
 @keyframes fall {
