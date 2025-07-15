@@ -740,10 +740,10 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
 
 bm.add('CTATHintWidget', {
   label: 'Hint Widget',
-  category: 'CTAT Widgets',
+  category: 'CTAT Components',
   content: `
   <section class="HintWidgetRow" data-gjs-resizable="true" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto; flex-wrap: wrap;"> 
-    <div class="HintWidgetButtons" data-gjs-resizable="true" style = "display: flex; flex-direction: column; flex-wrap: wrap; justify-content: center; margin-right: 10px; max-width: 68px;">
+    <div class="HintWidgetButtons" data-gjs-resizable="true" style = "display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; margin-right: 10px; max-width: 68px;">
       <div class="CTATHintButton">
       </div>
       <div class="CTATDoneButton" id='done'>

@@ -125,9 +125,11 @@ const panelStyles = `
   position: absolute;
   z-index: 1000;
   margin-top: 0;
-  background-color: #182444;  
+  background-color: var(--gjs-primary-color);  
   width: 500px;
-  height: 40vh;
+  max-height: calc(90vh - var(--gjs-canvas-top));
+  overflow: auto;
+  padding-bottom: 10px;
 }
 
 .gjs-title {
