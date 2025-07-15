@@ -188,10 +188,6 @@ const panelStyles = `
   padding: 10px 10px 20px 10px;
 }
 
-.gjs-layer > :not(.gjs-layer-item):not(.gjs-layer-children) {
-  display: none;
-}
-
 .gjs-layer-item {
   height: 20px;
   border-bottom: none;
