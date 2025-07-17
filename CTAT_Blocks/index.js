@@ -183,5 +183,11 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
       command: 'dragCommand',
     });
 
+    editor.Panels.addButton('options', {
+      id: 'helpButton',
+      className: 'fa fa-question-circle',
+      attributes: { title: 'Help' }
+    });
+
   });
 }

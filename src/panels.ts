@@ -244,6 +244,14 @@ const panelStyles = `
   min-height: 0px !important;
 }
 
+.gjs-block__media {
+  margin-bottom: -20px;
+}
+
+.gjs-block__media svg path {
+  fill: #b9a5a6;
+}
+
 .gjs-field input, .gjs-field textarea {
   color: black !important;
 }
