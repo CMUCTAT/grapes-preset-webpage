@@ -126,10 +126,9 @@ const panelStyles = `
   z-index: 1000;
   margin-top: 0;
   background-color: var(--gjs-primary-color);  
-  width: 500px;
+  width: 550px;
   max-height: calc(90vh - var(--gjs-canvas-top));
   overflow: auto;
-  padding-bottom: 10px;
 }
 
 .gjs-title {
@@ -239,9 +238,24 @@ const panelStyles = `
 }
 
 .gjs-block {
-  width: 20% !important;
-  aspect-ratio: 1 / 1 !important;
-  min-height: 0px !important;
+  width: 80px;
+  aspect-ratio: 1 / 1;
+  min-height: 0px;
+  margin: 0px;
+  padding: 0.5em;
+}
+
+.gjs-block__media {
+  margin-bottom: -20px;
+}
+
+.gjs-block__media svg {
+  width: 48px;
+  height: 48px;
+}
+
+.gjs-block__media svg path {
+  fill: #b9a5a6;
 }
 
 // .draggable-divider {
