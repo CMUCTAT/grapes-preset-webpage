@@ -244,6 +244,16 @@ const panelStyles = `
   min-height: 0px !important;
 }
 
+// .draggable-divider {
+//   width: 100%;
+//   height: 6px;
+//   background: #444;
+//   cursor: row-resize;
+//   user-select: none;
+//   touch-action: none;
+// }
+
+
 .gjs-field input, .gjs-field textarea {
   color: black !important;
 }
@@ -395,22 +405,84 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
     return sharedContainer;
   };
 
+  // const setupPanels = (sharedContainer: HTMLElement) => {
+  //   const mainPanel = document.createElement('div');
+  //   mainPanel.id = TARGET_PANEL_ID;
+  //   mainPanel.className = 'my-custom-left-panel';
+  //   document.getElementById('gjs')?.appendChild(mainPanel);
+    
+  //   const osaPanel = document.createElement('div');
+  //   osaPanel.id = 'custom-osa-panel';
+  //   sharedContainer.appendChild(osaPanel);
+    
+  //   const otaPanel = document.createElement('div');
+  //   otaPanel.id = 'custom-ota-panel';
+  //   sharedContainer.appendChild(otaPanel);
+    
+  //   return { mainPanel, osaPanel, otaPanel };
+  // };
+
   const setupPanels = (sharedContainer: HTMLElement) => {
     const mainPanel = document.createElement('div');
     mainPanel.id = TARGET_PANEL_ID;
     mainPanel.className = 'my-custom-left-panel';
     document.getElementById('gjs')?.appendChild(mainPanel);
-    
-    const osaPanel = document.createElement('div');
-    osaPanel.id = 'custom-osa-panel';
-    sharedContainer.appendChild(osaPanel);
-    
+
     const otaPanel = document.createElement('div');
     otaPanel.id = 'custom-ota-panel';
+    otaPanel.style.height = '150px'; // initial height in px
+    otaPanel.style.overflow = 'auto';
+
+    const divider = document.createElement('div');
+    divider.className = 'draggable-divider';
+    Object.assign(divider.style, {
+      width: '100%',
+      height: '6px',
+      background: '#444',
+      cursor: 'row-resize',
+      position: 'relative',
+      zIndex: 1002,
+      userSelect: 'none',
+      touchAction: 'none'
+    });
+
+    const osaPanel = document.createElement('div');
+    osaPanel.id = 'custom-osa-panel';
+    osaPanel.style.flex = '1 1 auto';
+    osaPanel.style.overflow = 'auto';
+
     sharedContainer.appendChild(otaPanel);
-    
-    return { mainPanel, osaPanel, otaPanel };
+    sharedContainer.appendChild(divider);
+    sharedContainer.appendChild(osaPanel);
+
+      let isDragging = false;
+
+    divider.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      document.body.style.userSelect = 'none';
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      const containerRect = sharedContainer.getBoundingClientRect();
+      const minHeight = 50;
+      const maxHeight = containerRect.height - 50;
+      let newHeight = e.clientY - containerRect.top;
+      newHeight = Math.max(minHeight, Math.min(newHeight, maxHeight));
+      otaPanel.style.height = newHeight + 'px';
+      // osaPanel flex will fill the rest
+    });
+
+    document.addEventListener('mouseup', function() {
+      isDragging = false;
+      document.body.style.userSelect = '';
+    });
+
+    // (Optional) Add drag logic here or in the parent setup
+
+    return { mainPanel, otaPanel, osaPanel, divider };
   };
+
 
   const addStyles = () => {
     const style = document.createElement('style');

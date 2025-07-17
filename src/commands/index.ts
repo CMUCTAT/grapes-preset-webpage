@@ -223,11 +223,27 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
           }
           traitPanel.style.display = 'block';
 
-          // Update the title dynamically when a component is selected
           editor.on('component:selected', (component: any) => {
             if (titleElement) {
-              const componentName = component?.get('type') || 'Unnamed Component';
-              titleElement.innerText = `Selected: ${componentName}`;
+              // Try to get a label trait if it exists
+              let componentLabel = component?.get('label');
+
+              // If not, try to get a trait value (e.g., data-ctat-label or similar)
+              if (!componentLabel && component?.get('traits')) {
+                const labelTrait = component.get('traits').find((t: any) =>
+                  t.name === 'label' || t.name === 'data-ctat-label'
+                );
+                if (labelTrait) {
+                  componentLabel = component.getAttributes()[labelTrait.name];
+                }
+              }
+
+              // Fallback to type if no label found
+              if (!componentLabel) {
+                componentLabel = component?.get('type') || 'Unnamed Component';
+              }
+
+              titleElement.innerText = componentLabel;
             }
           });
 

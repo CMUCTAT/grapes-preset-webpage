@@ -37,6 +37,15 @@ export default (editor, opts = {}) => {
   };
   
   const CTATTraits = [
+    // 'id',
+    ENABLE,
+    TUTOR,
+    SHOW_FEEDBACK, 
+    DISABLE_ON_CORRECT,
+    SHOW_HINT_HIGHLIGHT
+  ];
+
+  const CTATTraitsWithId = [
     'id',
     ENABLE,
     TUTOR,
@@ -201,6 +210,7 @@ export default (editor, opts = {}) => {
   });
 
   domc.addType('CTATAudioButton', new CTATComponentDef('CTATAudioButton', [
+    'id',
     {
       type: 'text',
       name: 'data-ctat-label',
@@ -222,6 +232,7 @@ export default (editor, opts = {}) => {
 
   domc.addType('CTATButton', new CTATComponentDef('CTATButton', [
     // Strings are automatically converted to text types
+    'id',
     {
       type: 'text',
       name: 'data-ctat-label',
@@ -242,6 +253,7 @@ export default (editor, opts = {}) => {
   ].concat(CTATTraits)));
   //FIXME: first param to addtype is type (ctat classname)
   domc.addType('CTATCheckBox', new CTATComponentDef('CTATCheckBox', [
+    'id',
     'name',
     {
       type: 'text',
@@ -252,6 +264,7 @@ export default (editor, opts = {}) => {
   ].concat(CTATTraits)));
 
   domc.addType('CTATComboBox', new CTATComponentDef('CTATComboBox', [
+    'id',
     {
       type: 'text',
       name: 'data-ctat-labels',
@@ -262,6 +275,7 @@ export default (editor, opts = {}) => {
   domc.addType('CTATDoneButton', new CTATComponentDef('CTATDoneButton', [ENABLE, SHOW_HINT_HIGHLIGHT]));
   
   domc.addType('CTATDragNDrop', new CTATComponentDef('CTATDragNDrop', [
+    'id',
     'name',
     {
       type: 'text',
@@ -272,6 +286,7 @@ export default (editor, opts = {}) => {
   ].concat(CTATTraits)));
 
   domc.addType('CTATFractionBar', new CTATComponentDef('CTATFractionBar', [
+    'id',
     {
       type: 'text',
       name: 'data-ctat-value',
@@ -313,6 +328,7 @@ export default (editor, opts = {}) => {
   domc.addType('CTATHintWindow', new CTATComponentDef('CTATHintWindow', ['id']));
 
   domc.addType('CTATImageButton', new CTATComponentDef('CTATImageButton', [
+    'id',
     {
       type: 'text',
       label: 'Image URL',
@@ -330,9 +346,9 @@ export default (editor, opts = {}) => {
     'data-ctat-image-disabled',
   ].concat(CTATTraits)));
 
-  domc.addType('CTATJumble', new CTATComponentDef('CTATJumble', CTATTraits.slice()));
+  domc.addType('CTATJumble', new CTATComponentDef('CTATJumble', CTATTraitsWithId.slice()));
 
-  domc.addType('CTATNumberLine', new CTATComponentDef('CTATNumberLine', CTATTraits.concat([
+  domc.addType('CTATNumberLine', new CTATComponentDef('CTATNumberLine', CTATTraitsWithId.concat([
     {
       type: 'text',
       name: 'data-ctat-maximum',
@@ -413,7 +429,7 @@ export default (editor, opts = {}) => {
     }, 
   ])));
 
-  domc.addType('CTATNumericStepper', new CTATComponentDef('CTATNumericStepper', CTATTraits.concat([
+  domc.addType('CTATNumericStepper', new CTATComponentDef('CTATNumericStepper', CTATTraitsWithId.concat([
     {
       type: 'text',
       name: 'value',
@@ -436,7 +452,7 @@ export default (editor, opts = {}) => {
     }, 
   ])));
 
-  domc.addType('CTATPieChart', new CTATComponentDef('CTATPieChart', CTATTraits.concat([
+  domc.addType('CTATPieChart', new CTATComponentDef('CTATPieChart', CTATTraitsWithId.concat([
     {
       type: 'text',
       name: 'data-ctat-value',
@@ -472,7 +488,7 @@ export default (editor, opts = {}) => {
     }, 
   ])));
 
-  domc.addType('CTATRadioButton', new CTATComponentDef('CTATRadioButton', CTATTraits.concat([
+  domc.addType('CTATRadioButton', new CTATComponentDef('CTATRadioButton', CTATTraitsWithId.concat([
     'name',
     {
       type: 'text',
@@ -491,7 +507,7 @@ export default (editor, opts = {}) => {
     }
   ]));
 
-  domc.addType('CTATSubmitButton', new CTATComponentDef('CTATSubmitButton', CTATTraits.concat([
+  domc.addType('CTATSubmitButton', new CTATComponentDef('CTATSubmitButton', CTATTraitsWithId.concat([
     {
       type:'text',
       name:'data-ctat-target',
