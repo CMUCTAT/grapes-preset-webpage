@@ -234,96 +234,11 @@ export default (editor, opts = {}) => {
     droppbale: false, 
   };
 
-  // … somewhere after your existing Basics (Line, flexBox, plainBox, etc.)
-
-bm.add('link-block', {
-  label: 'Link Block',
-  category: 'Basics',
-  media: `<svg viewBox="0 0 24 24">
-    <path fill="currentColor" d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z" />
-  </svg>`,
-  content: {
-    type: 'link',
-    editable: false,
-    droppable: true,
-    style: {
-      display: 'inline-block',
-      padding: '5px',
-      'min-height': '50px',
-      'min-width': '50px'
-    }
-  },
-  render: ({ model, className }) => `
-    <div class="${className}__my-wrap">
-      <div>
-        ${model.get('media')}
-        <div class="gjs-block-label">${model.get('label')}</div>
-      </div>
-    </div>
-  `
-});
-
-bm.add('quote', {
-  label: 'Quote',
-  category: 'Basics',
-  media: `<svg viewBox="0 0 24 24">
-    <path fill="currentColor" d="M14,17H17L19,13V7H13V13H16M6,17H9L11,13V7H5V13H8L6,17Z" />
-  </svg>`,
-  content: `<blockquote class="quote">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit
-    </blockquote>`,
-  render: ({ model, className }) => `
-    <div class="${className}__my-wrap">
-      <div>
-        ${model.get('media')}
-        <div class="gjs-block-label">${model.get('label')}</div>
-      </div>
-    </div>
-  `
-});
-
-bm.add('text-basic', {
-  label: 'Text section',
-  category: 'Basics',
-  media: `<svg viewBox="0 0 24 24">
-    <path fill="currentColor" d="M21,6V8H3V6H21M3,18H12V16H3V18M3,13H21V11H3V13Z" />
-  </svg>`,
-  content: `<section class="bdg-sect">
-    <h1 class="heading">Insert title here</h1>
-    <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-  </section>`,
-  render: ({ model, className }) => `
-    <div class="${className}__my-wrap">
-      <div>
-        ${model.get('media')}
-        <div class="gjs-block-label">${model.get('label')}</div>
-      </div>
-    </div>
-  `
-});
-
-  bm.add('Line', {
-    label: 'Line',
-    category: 'Basics',
-    content: `<hr data-gjs-resizable='true'>`,
-    render: ({ model, className }) => `<div class="${className}__my-wrap">
-    <div>
-    
-
-    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-width="50" height="48"
-viewBox="0 0 172 172"
-style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#b9a5a6"><path d="M6.88,79.12v13.76h158.24v-13.76z"></path></g></g></svg>
-    
-    <div class="gjs-block-label">${model.get('label')}</div>
-    
-    </div>
-  </div>`,
-  });
+  // … somewhere after your existing Basic Text Components (Line, flexBox, plainBox, etc.)
 
   bm.add('flexBox', {
     label: 'Flexbox',
-    category: 'Basics',
+    category: 'Basic Containers',
     content: `<div class="flexbox" data-gjs-resizable="true"> 
               </div>`,
     render: ({ model, className }) => `<div class="${className}__my-wrap">
@@ -340,28 +255,26 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   </div>`,
   });
 
-  bm.add('plainBox', {
-    label: 'Plainbox',
-    category: 'Basics',
-    content: `<div class="plainbox" data-gjs-resizable="true"> 
-              </div>`,
+  bm.add('Flex Column', {
+    label: 'Flex Column',
+    category: 'Basic Containers',
+    content: `<div class="flexcolumn" data-gjs-resizable="true"></div>`
+    ,
     render: ({ model, className }) => `<div class="${className}__my-wrap">
     <div>
     
     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-width="48" height="48"
-viewBox="0 0 172 172"
-style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g id="original-icon" fill="#b9a5a6"><path d="M26.875,26.875v118.25h118.25v-118.25zM37.625,37.625h96.75v96.75h-96.75z"></path></g></g></svg>
-
- 
-    <div class="gjs-block-label">${model.get('label')}</div>
+    width="48" height="43"
+    viewBox="0 0 172 172"
+    style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#b9a5a6"><path d="M27.70192,0c-3.97956,0 -6.61538,2.63582 -6.61538,6.61538v158.76923c0,3.97957 2.63582,6.61538 6.61538,6.61538h79.38462c3.97957,0 6.61538,-2.63581 6.61538,-6.61538v-22.53365c-4.6256,-1.31791 -9.2512,-2.53245 -13.23077,-5.16827v21.08654h-66.15385v-145.53846h66.15385v21.08654c3.97957,-1.98978 8.60517,-3.8762 13.23077,-4.54808v-23.15385c0,-3.97956 -2.63581,-6.61538 -6.61538,-6.61538zM126.93269,40.93269c-25.14363,0 -44.86058,19.92368 -44.86058,45.06731c0,25.14363 20.38882,45.06731 44.86058,45.06731c24.47176,0 45.06731,-20.59555 45.06731,-45.06731c0,-24.47176 -19.92368,-45.06731 -45.06731,-45.06731zM120.31731,59.53846h13.23077v19.84615h19.84615v13.23077h-19.84615v19.84615h-13.23077v-19.84615h-19.84615v-13.23077h19.84615z"></path></g></g></svg>    
+    <div class="gjs-block-label" style="margin-top:5px;">${model.get('label')}</div>
     </div>
   </div>`,
   });
 
   bm.add('flexRow', {
     label: 'Flex Row',
-    category: 'Basics',
+    category: 'Basic Containers',
     content: `<section class="flexrow" data-gjs-resizable="true"> 
 
               </section>`,
@@ -378,27 +291,47 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   </div>`,
   });
 
-  bm.add('Flex Column', {
-    label: 'Flex Column',
-    category: 'Basics',
-    content: `<div class="flexcolumn" data-gjs-resizable="true"></div>`
-    ,
+  bm.add('Line', {
+    label: 'Line',
+    category: 'Basic Containers',
+    content: `<hr data-gjs-resizable='true'>`,
     render: ({ model, className }) => `<div class="${className}__my-wrap">
     <div>
     
+
     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-    width="52" height="48"
-    viewBox="0 0 172 172"
-    style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#b9a5a6"><path d="M27.70192,0c-3.97956,0 -6.61538,2.63582 -6.61538,6.61538v158.76923c0,3.97957 2.63582,6.61538 6.61538,6.61538h79.38462c3.97957,0 6.61538,-2.63581 6.61538,-6.61538v-22.53365c-4.6256,-1.31791 -9.2512,-2.53245 -13.23077,-5.16827v21.08654h-66.15385v-145.53846h66.15385v21.08654c3.97957,-1.98978 8.60517,-3.8762 13.23077,-4.54808v-23.15385c0,-3.97956 -2.63581,-6.61538 -6.61538,-6.61538zM126.93269,40.93269c-25.14363,0 -44.86058,19.92368 -44.86058,45.06731c0,25.14363 20.38882,45.06731 44.86058,45.06731c24.47176,0 45.06731,-20.59555 45.06731,-45.06731c0,-24.47176 -19.92368,-45.06731 -45.06731,-45.06731zM120.31731,59.53846h13.23077v19.84615h19.84615v13.23077h-19.84615v19.84615h-13.23077v-19.84615h-19.84615v-13.23077h19.84615z"></path></g></g></svg>    
-    <div class="gjs-block-label" style="margin-top:10px;">${model.get('label')}</div>
+width="48" height="48"
+viewBox="0 0 172 172"
+style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#b9a5a6"><path d="M6.88,79.12v13.76h158.24v-13.76z"></path></g></g></svg>
+    
+    <div class="gjs-block-label">${model.get('label')}</div>
+    
     </div>
   </div>`,
   });
 
+  bm.add('plainBox', {
+    label: 'Plainbox',
+    category: 'Basic Containers',
+    content: `<div class="plainbox" data-gjs-resizable="true"> 
+              </div>`,
+    render: ({ model, className }) => `<div class="${className}__my-wrap">
+    <div>
+    
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+width="48" height="48"
+viewBox="0 0 172 172"
+style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g id="original-icon" fill="#b9a5a6"><path d="M26.875,26.875v118.25h118.25v-118.25zM37.625,37.625h96.75v96.75h-96.75z"></path></g></g></svg>
+
+ 
+    <div class="gjs-block-label">${model.get('label')}</div>
+    </div>
+  </div>`,
+  });
 
   bm.add('Table', {
     label: '3x3 Table',
-    category: 'Basics',
+    category: 'Basic Containers',
     content: `<table data-gjs-resizable="true">
     <tr class="tablerow" data-gjs-resizable="true">
       <th class="tablehead" data-gjs-resizable="true"></th>
@@ -420,31 +353,12 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   render: ({ model, className }) => `<div class="${className}__my-wrap">
   <div>
   <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-  width="64" height="57"
+  width="48" height="48"
   viewBox="0 0 172 172"
   style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#b9a5a6"><path d="M26.875,26.875v118.25h118.25v-118.25zM37.625,37.625h26.875v26.875h-26.875zM75.25,37.625h21.5v26.875h-21.5zM107.5,37.625h26.875v26.875h-26.875zM37.625,75.25h26.875v21.5h-26.875zM75.25,75.25h21.5v21.5h-21.5zM107.5,75.25h26.875v21.5h-26.875zM37.625,107.5h26.875v26.875h-26.875zM75.25,107.5h21.5v26.875h-21.5zM107.5,107.5h26.875v26.875h-26.875z"></path></g></g></svg>  <div class="gjs-block-label">${model.get('label')}</div>
   </div>
 </div>`,
   });
-
-
-  bm.add('CTATGroupingComponent', {
-    label: 'Grouping Component',
-    category: 'CTAT Components',
-    content: CTATGroupingComponent
-    ,
-    render: ({ model, className }) => `<div class="${className}__my-wrap">
-    <div>
-    
-    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-    width="64" height="48"
-    viewBox="0 0 172 172"
-    style=" fill:#000000;"><defs><linearGradient x1="86" y1="26.37513" x2="86" y2="144.88312" gradientUnits="userSpaceOnUse" id="color-1_56316_gr1"><stop offset="0" stop-color="#b9a5a6"></stop><stop offset="1" stop-color="#b9a5a6"></stop></linearGradient><linearGradient x1="21.5" y1="32.25" x2="21.5" y2="43.05375" gradientUnits="userSpaceOnUse" id="color-2_56316_gr2"><stop offset="0" stop-color="#eae4e4"></stop><stop offset="1" stop-color="#eae4e4"></stop></linearGradient><linearGradient x1="150.5" y1="32.25" x2="150.5" y2="43.05375" gradientUnits="userSpaceOnUse" id="color-3_56316_gr3"><stop offset="0" stop-color="#eae4e4"></stop><stop offset="1" stop-color="#eae4e4"></stop></linearGradient><linearGradient x1="21.5" y1="129" x2="21.5" y2="139.80375" gradientUnits="userSpaceOnUse" id="color-4_56316_gr4"><stop offset="0" stop-color="#eae4e4"></stop><stop offset="1" stop-color="#eae4e4"></stop></linearGradient><linearGradient x1="150.5" y1="129" x2="150.5" y2="139.80375" gradientUnits="userSpaceOnUse" id="color-5_56316_gr5"><stop offset="0" stop-color="#eae4e4"></stop><stop offset="1" stop-color="#eae4e4"></stop></linearGradient><linearGradient x1="86" y1="51.58388" x2="86" y2="120.529" gradientUnits="userSpaceOnUse" id="color-6_56316_gr6"><stop offset="0" stop-color="#eae4e4"></stop><stop offset="1" stop-color="#eae4e4"></stop></linearGradient></defs><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g><path d="M153.1875,124.00663v-76.01325c4.62519,-1.20131 8.0625,-5.375 8.0625,-10.36837c0,-5.92862 -4.82137,-10.75 -10.75,-10.75c-4.99606,0 -9.16706,3.44 -10.36837,8.0625h-108.26325c-1.20131,-4.6225 -5.37231,-8.0625 -10.36837,-8.0625c-5.92862,0 -10.75,4.82138 -10.75,10.75c0,4.99338 3.43731,9.16706 8.0625,10.36838v76.01325c-4.62519,1.20131 -8.0625,5.375 -8.0625,10.36837c0,5.92863 4.82138,10.75 10.75,10.75c4.99606,0 9.16706,-3.44 10.36838,-8.0625h108.26325c1.20131,4.6225 5.37231,8.0625 10.36837,8.0625c5.92863,0 10.75,-4.82137 10.75,-10.75c0,-4.99337 -3.43731,-9.16706 -8.0625,-10.36837zM24.1875,124.00663v-76.01325c3.75981,-0.97825 6.70262,-3.92106 7.68088,-7.68087h108.26325c0.97825,3.75981 3.92106,6.70262 7.68087,7.68088v76.01325c-3.75981,0.97825 -6.70262,3.92106 -7.68087,7.68087h-108.26325c-0.97825,-3.75981 -3.92106,-6.70262 -7.68087,-7.68087z" fill="url(#color-1_56316_gr1)"></path><path d="M21.5,32.25c-2.96853,0 -5.375,2.40647 -5.375,5.375c0,2.96853 2.40647,5.375 5.375,5.375c2.96853,0 5.375,-2.40647 5.375,-5.375c0,-2.96853 -2.40647,-5.375 -5.375,-5.375z" fill="url(#color-2_56316_gr2)"></path><path d="M150.5,32.25c-2.96853,0 -5.375,2.40647 -5.375,5.375c0,2.96853 2.40647,5.375 5.375,5.375c2.96853,0 5.375,-2.40647 5.375,-5.375c0,-2.96853 -2.40647,-5.375 -5.375,-5.375z" fill="url(#color-3_56316_gr3)"></path><path d="M21.5,129c-2.96853,0 -5.375,2.40647 -5.375,5.375c0,2.96853 2.40647,5.375 5.375,5.375c2.96853,0 5.375,-2.40647 5.375,-5.375c0,-2.96853 -2.40647,-5.375 -5.375,-5.375z" fill="url(#color-4_56316_gr4)"></path><path d="M150.5,129c-2.96853,0 -5.375,2.40647 -5.375,5.375c0,2.96853 2.40647,5.375 5.375,5.375c2.96853,0 5.375,-2.40647 5.375,-5.375c0,-2.96853 -2.40647,-5.375 -5.375,-5.375z" fill="url(#color-5_56316_gr5)"></path><path d="M34.9375,51.0625h102.125v69.875h-102.125z" fill="url(#color-6_56316_gr6)"></path></g></g></svg> 
-    <div class="gjs-block-label">${model.get('label')}</div>
-    </div>
-  </div>`,
-  });
-
 
   bm.add('CTATAudioButton', {
     label: 'Audio Button',
@@ -560,6 +474,23 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   </div>`,
   });
 
+  bm.add('CTATGroupingComponent', {
+    label: 'Grouping Component',
+    category: 'CTAT Components',
+    content: CTATGroupingComponent
+    ,
+    render: ({ model, className }) => `<div class="${className}__my-wrap">
+    <div>
+    
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+    width="64" height="48"
+    viewBox="0 0 172 172"
+    style=" fill:#000000;"><defs><linearGradient x1="86" y1="26.37513" x2="86" y2="144.88312" gradientUnits="userSpaceOnUse" id="color-1_56316_gr1"><stop offset="0" stop-color="#b9a5a6"></stop><stop offset="1" stop-color="#b9a5a6"></stop></linearGradient><linearGradient x1="21.5" y1="32.25" x2="21.5" y2="43.05375" gradientUnits="userSpaceOnUse" id="color-2_56316_gr2"><stop offset="0" stop-color="#eae4e4"></stop><stop offset="1" stop-color="#eae4e4"></stop></linearGradient><linearGradient x1="150.5" y1="32.25" x2="150.5" y2="43.05375" gradientUnits="userSpaceOnUse" id="color-3_56316_gr3"><stop offset="0" stop-color="#eae4e4"></stop><stop offset="1" stop-color="#eae4e4"></stop></linearGradient><linearGradient x1="21.5" y1="129" x2="21.5" y2="139.80375" gradientUnits="userSpaceOnUse" id="color-4_56316_gr4"><stop offset="0" stop-color="#eae4e4"></stop><stop offset="1" stop-color="#eae4e4"></stop></linearGradient><linearGradient x1="150.5" y1="129" x2="150.5" y2="139.80375" gradientUnits="userSpaceOnUse" id="color-5_56316_gr5"><stop offset="0" stop-color="#eae4e4"></stop><stop offset="1" stop-color="#eae4e4"></stop></linearGradient><linearGradient x1="86" y1="51.58388" x2="86" y2="120.529" gradientUnits="userSpaceOnUse" id="color-6_56316_gr6"><stop offset="0" stop-color="#eae4e4"></stop><stop offset="1" stop-color="#eae4e4"></stop></linearGradient></defs><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g><path d="M153.1875,124.00663v-76.01325c4.62519,-1.20131 8.0625,-5.375 8.0625,-10.36837c0,-5.92862 -4.82137,-10.75 -10.75,-10.75c-4.99606,0 -9.16706,3.44 -10.36837,8.0625h-108.26325c-1.20131,-4.6225 -5.37231,-8.0625 -10.36837,-8.0625c-5.92862,0 -10.75,4.82138 -10.75,10.75c0,4.99338 3.43731,9.16706 8.0625,10.36838v76.01325c-4.62519,1.20131 -8.0625,5.375 -8.0625,10.36837c0,5.92863 4.82138,10.75 10.75,10.75c4.99606,0 9.16706,-3.44 10.36838,-8.0625h108.26325c1.20131,4.6225 5.37231,8.0625 10.36837,8.0625c5.92863,0 10.75,-4.82137 10.75,-10.75c0,-4.99337 -3.43731,-9.16706 -8.0625,-10.36837zM24.1875,124.00663v-76.01325c3.75981,-0.97825 6.70262,-3.92106 7.68088,-7.68087h108.26325c0.97825,3.75981 3.92106,6.70262 7.68087,7.68088v76.01325c-3.75981,0.97825 -6.70262,3.92106 -7.68087,7.68087h-108.26325c-0.97825,-3.75981 -3.92106,-6.70262 -7.68087,-7.68087z" fill="url(#color-1_56316_gr1)"></path><path d="M21.5,32.25c-2.96853,0 -5.375,2.40647 -5.375,5.375c0,2.96853 2.40647,5.375 5.375,5.375c2.96853,0 5.375,-2.40647 5.375,-5.375c0,-2.96853 -2.40647,-5.375 -5.375,-5.375z" fill="url(#color-2_56316_gr2)"></path><path d="M150.5,32.25c-2.96853,0 -5.375,2.40647 -5.375,5.375c0,2.96853 2.40647,5.375 5.375,5.375c2.96853,0 5.375,-2.40647 5.375,-5.375c0,-2.96853 -2.40647,-5.375 -5.375,-5.375z" fill="url(#color-3_56316_gr3)"></path><path d="M21.5,129c-2.96853,0 -5.375,2.40647 -5.375,5.375c0,2.96853 2.40647,5.375 5.375,5.375c2.96853,0 5.375,-2.40647 5.375,-5.375c0,-2.96853 -2.40647,-5.375 -5.375,-5.375z" fill="url(#color-4_56316_gr4)"></path><path d="M150.5,129c-2.96853,0 -5.375,2.40647 -5.375,5.375c0,2.96853 2.40647,5.375 5.375,5.375c2.96853,0 5.375,-2.40647 5.375,-5.375c0,-2.96853 -2.40647,-5.375 -5.375,-5.375z" fill="url(#color-5_56316_gr5)"></path><path d="M34.9375,51.0625h102.125v69.875h-102.125z" fill="url(#color-6_56316_gr6)"></path></g></g></svg> 
+    <div class="gjs-block-label">${model.get('label')}</div>
+    </div>
+  </div>`,
+  });
+
 
   bm.add('CTATHintButton', {
     label: 'Hint Button',
@@ -575,7 +506,37 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
     <div class="gjs-block-label">${model.get('label')}</div>
     </div>  
   </div>`,
+  });
+
+  bm.add('CTATHintWidget', {
+    label: 'Hint Widget',
+    category: 'CTAT Components',
+    content: `
+  <section class="HintWidgetRow" data-gjs-resizable="true" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto; flex-wrap: wrap;"> 
+    <div class="HintWidgetButtons" data-gjs-resizable="true" style = "display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; margin-right: 10px; max-width: 68px;">
+      <div class="CTATHintButton">
+      </div>
+      <div class="CTATDoneButton" id='done'>
+      </div>
+    </div>
     
+    <div class="CTATHintWindow" data-gjs-resizable = 'true' style = "margin-right:10px">
+    </div>
+
+    <div class="CTATSkillWindow" data-gjs-resizable = 'true'>
+    </div>
+
+  </section>
+  `,
+    render: ({ model, className }) => `<div class="${className}__my-wrap">
+  <div>
+  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+width="48" height="48"
+viewBox="0 0 172 172"
+style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g id="original-icon" fill="#b9a5a6"><path d="M13.4375,21.5c-4.56875,0 -8.0625,3.73231 -8.0625,8.08875v112.73327c0,4.35644 3.49375,8.08875 8.0625,8.08875h145.125c4.56875,0 8.0625,-3.73231 8.0625,-8.08875v-112.73327c0,-4.35644 -3.49375,-8.08875 -8.0625,-8.08875zM13.4375,26.79102h145.125c1.6125,0 2.6875,1.24167 2.6875,2.79773v112.73327c0,1.55606 -1.075,2.80298 -2.6875,2.80298h-145.125c-1.6125,0 -2.6875,-1.24692 -2.6875,-2.80298v-112.73327c0,-1.55606 1.075,-2.79773 2.6875,-2.79773zM18.8125,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM32.25,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM45.6875,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM59.125,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM72.5625,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM86,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM99.4375,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM112.875,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM126.3125,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM139.75,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM153.1875,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM18.8125,48.375c-1.6125,0 -2.6875,1.075 -2.6875,2.6875c0,1.6125 1.075,2.6875 2.6875,2.6875h18.8125v64.5h-18.8125c-1.6125,0 -2.6875,1.075 -2.6875,2.6875c0,1.6125 1.075,2.6875 2.6875,2.6875h134.375c1.6125,0 2.6875,-1.075 2.6875,-2.6875c0,-1.6125 -1.075,-2.6875 -2.6875,-2.6875h-18.8125v-64.5h18.8125c1.6125,0 2.6875,-1.075 2.6875,-2.6875c0,-1.6125 -1.075,-2.6875 -2.6875,-2.6875zM43,53.75h86v64.5h-86zM72.40503,59.125c-1.42237,0.08362 -2.53234,1.26267 -2.53003,2.6875v48.375c0.00072,0.96743 0.52129,1.85983 1.36304,2.33664c0.84176,0.47682 1.87482,0.46447 2.70495,-0.03232l40.3125,-24.1875c0.80917,-0.48584 1.30422,-1.3605 1.30422,-2.30432c0,-0.94382 -0.49505,-1.81848 -1.30422,-2.30432l-40.3125,-24.1875c-0.38475,-0.23187 -0.82147,-0.36361 -1.27026,-0.38318c-0.08918,-0.00445 -0.17852,-0.00445 -0.2677,0zM75.25,66.55762l32.40222,19.44238l-32.40222,19.44238zM18.8125,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM32.25,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM45.6875,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM59.125,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM72.5625,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM86,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM99.4375,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM112.875,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM126.3125,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM139.75,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM153.1875,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875z"></path></g></g></svg>
+  <div class="gjs-block-label">${model.get('label')}</div>
+  </div>  
+</div>`,
   });
 
   bm.add('CTATHintWindow', {
@@ -793,39 +754,6 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   label: 'Video',
   category: 'CTAT Components',
   content: CTATVideo,
-  render: ({ model, className }) => `<div class="${className}__my-wrap">
-  <div>
-  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-width="48" height="48"
-viewBox="0 0 172 172"
-style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g id="original-icon" fill="#b9a5a6"><path d="M13.4375,21.5c-4.56875,0 -8.0625,3.73231 -8.0625,8.08875v112.73327c0,4.35644 3.49375,8.08875 8.0625,8.08875h145.125c4.56875,0 8.0625,-3.73231 8.0625,-8.08875v-112.73327c0,-4.35644 -3.49375,-8.08875 -8.0625,-8.08875zM13.4375,26.79102h145.125c1.6125,0 2.6875,1.24167 2.6875,2.79773v112.73327c0,1.55606 -1.075,2.80298 -2.6875,2.80298h-145.125c-1.6125,0 -2.6875,-1.24692 -2.6875,-2.80298v-112.73327c0,-1.55606 1.075,-2.79773 2.6875,-2.79773zM18.8125,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM32.25,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM45.6875,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM59.125,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM72.5625,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM86,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM99.4375,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM112.875,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM126.3125,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM139.75,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.4835 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM153.1875,32.25c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM18.8125,48.375c-1.6125,0 -2.6875,1.075 -2.6875,2.6875c0,1.6125 1.075,2.6875 2.6875,2.6875h18.8125v64.5h-18.8125c-1.6125,0 -2.6875,1.075 -2.6875,2.6875c0,1.6125 1.075,2.6875 2.6875,2.6875h134.375c1.6125,0 2.6875,-1.075 2.6875,-2.6875c0,-1.6125 -1.075,-2.6875 -2.6875,-2.6875h-18.8125v-64.5h18.8125c1.6125,0 2.6875,-1.075 2.6875,-2.6875c0,-1.6125 -1.075,-2.6875 -2.6875,-2.6875zM43,53.75h86v64.5h-86zM72.40503,59.125c-1.42237,0.08362 -2.53234,1.26267 -2.53003,2.6875v48.375c0.00072,0.96743 0.52129,1.85983 1.36304,2.33664c0.84176,0.47682 1.87482,0.46447 2.70495,-0.03232l40.3125,-24.1875c0.80917,-0.48584 1.30422,-1.3605 1.30422,-2.30432c0,-0.94382 -0.49505,-1.81848 -1.30422,-2.30432l-40.3125,-24.1875c-0.38475,-0.23187 -0.82147,-0.36361 -1.27026,-0.38318c-0.08918,-0.00445 -0.17852,-0.00445 -0.2677,0zM75.25,66.55762l32.40222,19.44238l-32.40222,19.44238zM18.8125,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM32.25,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM45.6875,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM59.125,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM72.5625,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM86,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM99.4375,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM112.875,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM126.3125,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM139.75,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875zM153.1875,129c-1.6125,0 -2.6875,1.20131 -2.6875,2.6875v5.375c0,1.48619 1.075,2.6875 2.6875,2.6875c1.6125,0 2.6875,-1.20131 2.6875,-2.6875v-5.375c0,-1.48619 -1.075,-2.6875 -2.6875,-2.6875z"></path></g></g></svg>
-  <div class="gjs-block-label">${model.get('label')}</div>
-  </div>  
-</div>`, 
-  });
-
-
-
-bm.add('CTATHintWidget', {
-  label: 'Hint Widget',
-  category: 'CTAT Components',
-  content: `
-  <section class="HintWidgetRow" data-gjs-resizable="true" style="display: flex; justify-content: center; align-items: center; width: 100%; height: auto; flex-wrap: wrap;"> 
-    <div class="HintWidgetButtons" data-gjs-resizable="true" style = "display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; margin-right: 10px; max-width: 68px;">
-      <div class="CTATHintButton">
-      </div>
-      <div class="CTATDoneButton" id='done'>
-      </div>
-    </div>
-    
-    <div class="CTATHintWindow" data-gjs-resizable = 'true' style = "margin-right:10px">
-    </div>
-
-    <div class="CTATSkillWindow" data-gjs-resizable = 'true'>
-    </div>
-
-  </section>
-  `,
   render: ({ model, className }) => `<div class="${className}__my-wrap">
   <div>
   <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
