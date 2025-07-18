@@ -86,7 +86,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
                 });
               }
             }
-          }, 5);
+          }, 0);
         },
         stop() {
           if (!blocksPanel) return;
@@ -155,7 +155,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
                 });
               }
             }
-          }, 5);
+          }, 0);
         },
         
         stop() {
