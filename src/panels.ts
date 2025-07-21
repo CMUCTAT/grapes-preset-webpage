@@ -217,11 +217,11 @@ const panelStyles = `
   left: 180px;
 }
 
-.gjs-pn-devices-c .gjs-pn-buttons {
+.gjs-pn-devices-c .gjs-pn-buttons, .gjs-pn-oba-toggle .gjs-pn-buttons {
   height: 100%;
 }
 
-.gjs-pn-devices-c .gjs-pn-btn {
+.gjs-pn-devices-c .gjs-pn-btn, .gjs-pn-oba-toggle .gjs-pn-btn {
   margin-right: 0px;
   height: 100%;
   padding-left: 15px;
@@ -235,6 +235,11 @@ const panelStyles = `
 .gjs-pn-devices-c .gjs-pn-btn:nth-last-child(5),
 .gjs-pn-devices-c .gjs-pn-btn:last-child {
   border-right: none;
+}
+
+.gjs-pn-oba-toggle {
+  position: absolute;
+  left: 400px;
 }
 
 .gjs-block {
@@ -309,7 +314,10 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
       id: cmdDeviceMobile,
       command: cmdDeviceMobile,
       label: createIcon(ICONS.mobile, iconStyle)
-    },
+    }
+  ];
+
+  const obaPanelButtons = [
     {
       id: 'oba-override',
       command: 'oba-override',
@@ -320,7 +328,7 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
       command: 'oba-override-2',
       label: createDropdownContent('CTAT', '100px')
     }
-  ];
+  ]
   
   const optionPanelButtons = [
     {
@@ -386,6 +394,10 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
     {
       id: 'devices-c',
       buttons: devicePanelButtons
+    },
+    {
+      id: 'oba-toggle',
+      buttons: obaPanelButtons
     },
     {
       id: 'options',
