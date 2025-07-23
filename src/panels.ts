@@ -154,6 +154,7 @@ const panelStyles = `
   height: ${CUSTOM_OTA_PANEL_HEIGHT};
   overflow: auto;
   padding: 10px 0px;
+  border-bottom: solid 1px var(--gjs-main-light-color);
 }
 
 #custom-osa-panel {
@@ -164,8 +165,11 @@ const panelStyles = `
   width: 100%;
   height: calc(90vh - var(--gjs-canvas-top) - ${CUSTOM_OTA_PANEL_HEIGHT});
   overflow: auto;
-  flex: 1 1 auto;
-  padding: 10px 0px;
+  padding-bottom: 10px;
+}
+
+#custom-osa-panel .gjs-clm-sels-info {
+  min-height: 10px;
 }
 
 #custom-osa-panel .btn {

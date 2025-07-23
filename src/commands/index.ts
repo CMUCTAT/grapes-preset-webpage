@@ -196,11 +196,9 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
           titleElement.style.cssText = `
             font-size: 16px;
             font-weight: bold;
-            padding: 10px;
+            padding: 0px 10px 5px 10px;
             background-color: #182444;
-            color: white;
-            text-align: center;
-            border-bottom: 1px solid #1C2F61;
+            color: var(--gjs-font-color);
           `;
           titleElement.innerText = 'No Component Selected'; // Default text
           traitPanelElement.appendChild(titleElement);
@@ -269,11 +267,9 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
         run(editor: any) {
 
           const styleManager = editor.StyleManager;
+          const selectorManager = editor.SelectorManager || editor.Selectors;
           const panelManager = editor.Panels;
           const styleManagerConfig = styleManager.getConfig();
-
-
-          let panelInfo = panelManager.getPanel('custom-osa-panel');
 
           if (styleManagerConfig.appendTo) return;
           if (!stylePanel) {
@@ -286,6 +282,13 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
                 id: 'custom-osa-panel',
               });
             }
+            panel.set('appendContent', stylePanelElement).trigger('change:appendContent');
+
+            if (selectorManager.getConfig().custom) {
+              selectorManager.__trgCustom({ container: stylePanelElement });   // <-- critical line
+            } else {
+              stylePanelElement.appendChild(selectorManager.render());
+            }
 
             if (styleManagerConfig.custom) {
               styleManager.__trgCustom({ container: stylePanelElement });
@@ -293,7 +296,6 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
               stylePanelElement.appendChild(styleManager.render());
             }
 
-            panel.set('appendContent', stylePanelElement).trigger('change:appendContent');
             stylePanel = stylePanelElement;
           }
 
