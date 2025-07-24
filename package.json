@@ -1,6 +1,6 @@
 {
   "name": "grapesjs-preset-webpage",
-  "version": "1.0.72",
+  "version": "1.0.73",
   "description": "GrapesJS Plugin Webpage Preset",
   "main": "dist/index.js",
   "files": [
