@@ -151,6 +151,7 @@ const panelStyles = `
   background-color: #182444;
   width: 15%;
   height: 100vh;
+  align-items: left;
 }
 
 #custom-osa-panel {
@@ -163,6 +164,7 @@ const panelStyles = `
   height: 70vh;
   overflow: auto;
   flex: 1 1 auto;
+  align-items: left;
 }
 
 #custom-ota-panel {

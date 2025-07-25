@@ -186,7 +186,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             padding: 10px;
             background-color: #182444;
             color: white;
-            text-align: center;
+            text-align: left;
             border-bottom: 1px solid #1C2F61;
           `;
           titleElement.innerText = 'No Component Selected'; // Default text
