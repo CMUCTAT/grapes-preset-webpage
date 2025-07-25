@@ -170,7 +170,8 @@ export default (editor, opts = {}) => {
     editor.Panels.addButton('options', {
       id: 'uploadButton',
       className: 'fa fa-upload',
-      command: 'uploadCommand'
+      command: 'uploadCommand',
+      attributes: { 'data-tippy-content': 'Upload HTML with CSS' }
     });
 
     editor.Panels.removeButton('options',"gjs-open-import-webpage"); 
@@ -186,12 +187,13 @@ export default (editor, opts = {}) => {
             C72.034,360.116,31,388.309,31,422c0,58.462,115.928,90,225,90s225-31.538,225-90C481,388.285,439.909,360.077,373.264,344.695z" /></g></g>
         </svg>`,
       command: 'dragCommand',
+      attributes: { 'data-tippy-content': 'Absolute Position Drag Mode' }
     });
 
     editor.Panels.addButton('options', {
       id: 'tutorialButton',
       className: 'fa fa-question-circle',
-      attributes: { title: 'Start Tutorial' }
+      attributes: { 'data-tippy-content': 'Start Tutorial' }
     });
 
   });

@@ -340,43 +340,51 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
       command: swv,
       context: swv,
       label: createIcon(ICONS.visibility, iconStyle),
+      attributes: { 'data-tippy-content': 'View Grid lines' }
     },
     {
       id: prv,
       context: prv,
       command: () => editor.runCommand(prv),
-      label: createIcon(ICONS.preview, iconStyle)
+      label: createIcon(ICONS.preview, iconStyle),
+      attributes: { 'data-tippy-content': 'Preview' }
     },
     {
       id: ful,
       command: ful,
       context: ful,
-      label: createIcon(ICONS.fullscreen, iconStyle)
+      label: createIcon(ICONS.fullscreen, iconStyle),
+      attributes: { 'data-tippy-content': 'Full Screen' }
     },
     {
       id: expt,
       command: () => editor.runCommand(expt),
-      label: createIcon(ICONS.export, iconStyle)
+      label: createIcon(ICONS.export, iconStyle),
+      attributes: { 'data-tippy-content': 'View Code' }
     },
     {
       id: 'undo',
       command: () => editor.runCommand('core:undo'),
-      label: createIcon(ICONS.undo, iconStyle)
+      label: createIcon(ICONS.undo, iconStyle),
+      attributes: { 'data-tippy-content': 'Undo' }
     },
     {
       id: 'redo',
       command: () => editor.runCommand('core:redo'),
-      label: createIcon(ICONS.redo, iconStyle)
+      label: createIcon(ICONS.redo, iconStyle),
+      attributes: { 'data-tippy-content': 'Redo' }
     },
     {
       id: cmdImport,
       command: () => editor.runCommand(cmdImport),
-      label: createIcon(ICONS.import, iconStyle)
+      label: createIcon(ICONS.import, iconStyle),
+      attributes: { 'data-tippy-content': 'Import' }
     },
     {
       id: cmdClear,
       command: () => editor.runCommand(cmdClear),
-      label: createIcon(ICONS.clear, iconStyle)
+      label: createIcon(ICONS.clear, iconStyle),
+      attributes: { 'data-tippy-content': 'Clear Canvas' }
     }
   ];
 
