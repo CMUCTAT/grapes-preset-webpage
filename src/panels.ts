@@ -9,6 +9,7 @@ import {
   cmdClear,
   TARGET_PANEL_ID,
   LEFT_PANEL_WIDTH,
+  CUSTOM_OTA_PANEL_HEIGHT,
 } from './consts';
 
 const ICONS = {
@@ -48,7 +49,7 @@ const createDropdownContent = (label: string, width: string = '180px') => {
     height="24"  
     viewBox="0 0 350 350" 
     style="
-      fill: white; 
+      fill: var(--gjs-font-color); 
       transition: transform 0.3s ease;
       transform: translate(5px, 5px)
     "
@@ -60,7 +61,7 @@ const createDropdownContent = (label: string, width: string = '180px') => {
     class="layers-button-text" 
     style="
       font-size: 14px; 
-      color: white; 
+      color: var(--gjs-font-color); 
       font-weight: 500;
       user-select: none;
       margin-bottom: 4px;
@@ -101,6 +102,10 @@ const panelStyles = `
   }
 }
 
+.opening {
+  animation: fall 0.2s ease-out forwards !important;
+}
+
 .rise {
   animation: rise 0.2s ease-in forwards !important;
 }
@@ -117,15 +122,14 @@ const panelStyles = `
 }
 
 #oba-custom-panel {
-  left: 340px;    
+  top: var(--gjs-canvas-top);
   position: absolute;
   z-index: 1000;
-  top: 47px;
   margin-top: 0;
-  background-color: #182444;  
-  width: 500px;
-  height: 40vh;
-  animation: fall 0.2s ease-out forwards;
+  background-color: var(--gjs-primary-color);  
+  width: 550px;
+  max-height: calc(90vh - var(--gjs-canvas-top));
+  overflow: auto;
 }
 
 .gjs-title {
@@ -136,7 +140,7 @@ const panelStyles = `
   left: 400px;    
   position: absolute;
   z-index: 1000;
-  top: 47px;
+  top: var(--gjs-canvas-top);
   margin-top: 0;
   background-color: #182444;
   width: 200px;
@@ -144,43 +148,48 @@ const panelStyles = `
 }
 
 #custom-ota-panel {
-  position: fixed;
-  right: 0px;
-  top: 50px;
-  margin-top: 0;
+  position: absolute;
+  top: var(--gjs-canvas-top);
   background-color: #182444;
-  width: 15%;
-  height: 100vh;
+  width: 100%;
+  height: ${CUSTOM_OTA_PANEL_HEIGHT};
+  overflow: auto;
+  padding: 10px 0px;
+  border-bottom: solid 1px var(--gjs-main-light-color);
   align-items: left;
 }
 
 #custom-osa-panel {
-  position: fixed;
-  right: 0px;
-  top: 200px;
-  margin-top: 10vh;
+  position: absolute;
+  top: calc(var(--gjs-canvas-top) + ${CUSTOM_OTA_PANEL_HEIGHT});
+  margin-top: 0;
   background-color: #182444;
-  width: 15%;
-  height: 70vh;
+  width: 100%;
+  height: calc(90vh - var(--gjs-canvas-top) - ${CUSTOM_OTA_PANEL_HEIGHT});
   overflow: auto;
-  flex: 1 1 auto;
+  padding-bottom: 10px;
   align-items: left;
 }
 
-#custom-ota-panel {
-  max-height: 25vh;
-  overflow: auto;
+#custom-osa-panel .gjs-clm-sels-info {
+  min-height: 10px;
+}
+
+#custom-osa-panel .btn {
+    color: var(--gjs-font-color);
+    width: 100%;
 }
 
 #my-custom-layers {
-  margin-top: 41px;
+  position: absolute;
+  top: var(--gjs-canvas-top);
+  left: 0px;
   margin-left: -5px;
   background-color: #182444;
   width: fit-content;
   min-width: ${LEFT_PANEL_WIDTH};
   max-width: 350px;
-  height: calc(100vh - 41px);
-  animation: fall 0.2s ease-out forwards;
+  height: calc(90vh - var(--gjs-canvas-top));
   overflow: auto;
   padding: 10px 10px 20px 10px;
 }
@@ -215,11 +224,11 @@ const panelStyles = `
   left: 180px;
 }
 
-.gjs-pn-devices-c .gjs-pn-buttons {
+.gjs-pn-devices-c .gjs-pn-buttons, .gjs-pn-oba-toggle .gjs-pn-buttons {
   height: 100%;
 }
 
-.gjs-pn-devices-c .gjs-pn-btn {
+.gjs-pn-devices-c .gjs-pn-btn, .gjs-pn-oba-toggle .gjs-pn-btn {
   margin-right: 0px;
   height: 100%;
   padding-left: 15px;
@@ -235,10 +244,30 @@ const panelStyles = `
   border-right: none;
 }
 
+.gjs-pn-oba-toggle {
+  position: absolute;
+  left: 400px;
+}
+
 .gjs-block {
-  width: 20% !important;
-  aspect-ratio: 1 / 1 !important;
-  min-height: 0px !important;
+  width: 80px;
+  aspect-ratio: 1 / 1;
+  min-height: 0px;
+  margin: 0px;
+  padding: 0.5em;
+}
+
+.gjs-block__media {
+  margin-bottom: -20px;
+}
+
+.gjs-block__media svg {
+  width: 48px;
+  height: 48px;
+}
+
+.gjs-block__media svg path {
+  fill: #b9a5a6;
 }
 
 // .draggable-divider {
@@ -292,7 +321,10 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
       id: cmdDeviceMobile,
       command: cmdDeviceMobile,
       label: createIcon(ICONS.mobile, iconStyle)
-    },
+    }
+  ];
+
+  const obaPanelButtons = [
     {
       id: 'oba-override',
       command: 'oba-override',
@@ -303,7 +335,7 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
       command: 'oba-override-2',
       label: createDropdownContent('CTAT', '100px')
     }
-  ];
+  ]
   
   const optionPanelButtons = [
     {
@@ -311,43 +343,51 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
       command: swv,
       context: swv,
       label: createIcon(ICONS.visibility, iconStyle),
+      attributes: { 'data-tippy-content': 'View Grid lines' }
     },
     {
       id: prv,
       context: prv,
       command: () => editor.runCommand(prv),
-      label: createIcon(ICONS.preview, iconStyle)
+      label: createIcon(ICONS.preview, iconStyle),
+      attributes: { 'data-tippy-content': 'Preview' }
     },
     {
       id: ful,
       command: ful,
       context: ful,
-      label: createIcon(ICONS.fullscreen, iconStyle)
+      label: createIcon(ICONS.fullscreen, iconStyle),
+      attributes: { 'data-tippy-content': 'Full Screen' }
     },
     {
       id: expt,
       command: () => editor.runCommand(expt),
-      label: createIcon(ICONS.export, iconStyle)
+      label: createIcon(ICONS.export, iconStyle),
+      attributes: { 'data-tippy-content': 'View Code' }
     },
     {
       id: 'undo',
       command: () => editor.runCommand('core:undo'),
-      label: createIcon(ICONS.undo, iconStyle)
+      label: createIcon(ICONS.undo, iconStyle),
+      attributes: { 'data-tippy-content': 'Undo' }
     },
     {
       id: 'redo',
       command: () => editor.runCommand('core:redo'),
-      label: createIcon(ICONS.redo, iconStyle)
+      label: createIcon(ICONS.redo, iconStyle),
+      attributes: { 'data-tippy-content': 'Redo' }
     },
     {
       id: cmdImport,
       command: () => editor.runCommand(cmdImport),
-      label: createIcon(ICONS.import, iconStyle)
+      label: createIcon(ICONS.import, iconStyle),
+      attributes: { 'data-tippy-content': 'Import' }
     },
     {
       id: cmdClear,
       command: () => editor.runCommand(cmdClear),
-      label: createIcon(ICONS.clear, iconStyle)
+      label: createIcon(ICONS.clear, iconStyle),
+      attributes: { 'data-tippy-content': 'Clear Canvas' }
     }
   ];
 
@@ -369,6 +409,10 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
     {
       id: 'devices-c',
       buttons: devicePanelButtons
+    },
+    {
+      id: 'oba-toggle',
+      buttons: obaPanelButtons
     },
     {
       id: 'options',
@@ -393,7 +437,10 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
         flexDirection: 'column',  
       });
       
-      document.body.appendChild(sharedContainer);
+      const editorContainer = document.getElementById('gjs');
+      if (editorContainer) {
+        editorContainer.appendChild(sharedContainer);
+      }
     }
     
     return sharedContainer;

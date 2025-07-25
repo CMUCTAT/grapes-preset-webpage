@@ -10,6 +10,8 @@ import {
 } from './../consts';
 import openImport from './openImport';
 
+let activeOba: "" | "basics" | "ctat" = "";
+
 export default (editor: Editor, config: RequiredPluginOptions) => {
   const { Commands } = editor;
   const txtConfirm = config.textCleanCanvas;
@@ -35,6 +37,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
       return {
 
         run(editor: any) {
+          activeOba = "basics";
 
           const blockManager = editor.BlockManager;
           const panelManager = editor.Panels;
@@ -61,33 +64,39 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             panel.set('appendContent', blocksPanelElement).trigger('change:appendContent');
             blocksPanel = blocksPanelElement;
           }
-          blocksPanel.classList.remove('rise');
 
           blocksPanel.style.display = 'block';
-          setTimeout(() => {
-            if(blocksPanel){
-        
-            let blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
 
-            if(blockCategories.length < 3){
-              blocksPanel.appendChild(editor.BlockManager.render())
-              blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
+          setTimeout(() => {
+            if (blocksPanel) {
+
+              let blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
+
+              if (blockCategories.length < 3) {
+                blocksPanel.appendChild(editor.BlockManager.render())
+                blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
+              }
+              if (blockCategories.length >= 3) {
+                blockCategories.forEach((category: Element, index: Number) => {
+                  if (index === 2) {
+                    (category as HTMLElement).style.display = 'none';
+                  } else {
+                    (category as HTMLElement).style.display = 'block';
+                  }
+                });
+              }
             }
-            if (blockCategories.length >= 3) {
-              blockCategories.forEach((category:Element, index:Number) => {
-                if (index === 2) {
-                  (category as HTMLElement).style.display = 'none';
-                } else {
-                  (category as HTMLElement).style.display = 'block';
-                }
-              });
-            }}
-          }, 5);
+          }, 0);
         },
         stop() {
-          if (blocksPanel) {
-            blocksPanel.classList.add('rise');
-          }
+          if (!blocksPanel) return;
+
+          setTimeout(() => {
+            if (!blocksPanel) return;
+            if (activeOba === "basics") {
+              blocksPanel.style.display = 'none';
+            }
+          }, 150);
         },
       };
     })());
@@ -97,6 +106,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
       return {
 
         run(editor: any) {
+          activeOba = "ctat";
 
           const blockManager = editor.BlockManager;
           const panelManager = editor.Panels;
@@ -124,36 +134,39 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             ctatBlocksPanel = ctatBlocksPanelElement;
           }
 
-
-          ctatBlocksPanel.classList.remove('rise');
-
           ctatBlocksPanel.style.display = 'block';
 
           setTimeout(() => {
-            if(ctatBlocksPanel){
-        
-            let blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
+            if (ctatBlocksPanel) {
 
-            if(blockCategories.length < 3){
-              ctatBlocksPanel.appendChild(editor.BlockManager.render())
-              blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
+              let blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
+
+              if (blockCategories.length < 3) {
+                ctatBlocksPanel.appendChild(editor.BlockManager.render())
+                blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
+              }
+              if (blockCategories.length >= 3) {
+                blockCategories.forEach((category: Element, index: Number) => {
+                  if (index === 2) {
+                    (category as HTMLElement).style.display = 'block';
+                  } else {
+                    (category as HTMLElement).style.display = 'none';
+                  }
+                });
+              }
             }
-            if (blockCategories.length >= 3) {
-              blockCategories.forEach((category:Element, index:Number) => {
-                if (index === 2) {
-                  (category as HTMLElement).style.display = 'block';
-                } else {
-                  (category as HTMLElement).style.display = 'none';
-                }
-              });
-            }}
-          }, 5);
+          }, 0);
         },
         
         stop() {
-          if (ctatBlocksPanel) {
-            ctatBlocksPanel.classList.add('rise');
-          }
+          if (!ctatBlocksPanel) return;
+
+          setTimeout(() => {
+            if (!ctatBlocksPanel) return;
+            if (activeOba === "ctat") {
+              ctatBlocksPanel.style.display = 'none';
+            }
+          }, 150);
         },
       };
     })());
@@ -183,7 +196,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
           titleElement.style.cssText = `
             font-size: 16px;
             font-weight: bold;
-            padding: 10px;
+            padding: 0px 10px 5px 10px;
             background-color: #182444;
             color: white;
             text-align: left;
@@ -256,11 +269,9 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
         run(editor: any) {
 
           const styleManager = editor.StyleManager;
+          const selectorManager = editor.SelectorManager || editor.Selectors;
           const panelManager = editor.Panels;
           const styleManagerConfig = styleManager.getConfig();
-
-
-          let panelInfo = panelManager.getPanel('custom-osa-panel');
 
           if (styleManagerConfig.appendTo) return;
           if (!stylePanel) {
@@ -273,6 +284,13 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
                 id: 'custom-osa-panel',
               });
             }
+            panel.set('appendContent', stylePanelElement).trigger('change:appendContent');
+
+            if (selectorManager.getConfig().custom) {
+              selectorManager.__trgCustom({ container: stylePanelElement });   // <-- critical line
+            } else {
+              stylePanelElement.appendChild(selectorManager.render());
+            }
 
             if (styleManagerConfig.custom) {
               styleManager.__trgCustom({ container: stylePanelElement });
@@ -280,7 +298,6 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
               stylePanelElement.appendChild(styleManager.render());
             }
 
-            panel.set('appendContent', stylePanelElement).trigger('change:appendContent');
             stylePanel = stylePanelElement;
           }
 
@@ -302,8 +319,6 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
         const layerManager = editor.LayerManager;
         const panelManager = editor.Panels;
         const layerManagerConfig = layerManager.getConfig();
-
-
         let panelInfo = panelManager.getPanel(TARGET_PANEL_ID);
 
         if (layerManagerConfig.appendTo) return;
@@ -336,24 +351,34 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
           layersPanel = layersPanelElement;
         }
         layersPanel.classList.remove('rise');
-
+        layersPanel.classList.add('opening');
         layersPanel.style.display = 'block';
+        layersPanel.addEventListener('animationend', () => {
+          if (!layersPanel) return;
+          layersPanel.classList.remove('opening');
+        }, { once: true });
+
       },
       
       stop() {
         if (layersPanel) {
+          layersPanel.classList.remove('opening');
           layersPanel.classList.add('rise');
+          layersPanel.addEventListener('animationend', () => {
+            if (!layersPanel) return;
+            layersPanel.style.display = 'none';
+            layersPanel.classList.remove('rise');
+          }, { once: true });
+
           const wrapper = editor.getWrapper();
-          if(wrapper)
-          {
-          wrapper.setStyle({
-            padding:'0px 0px 0px 0px',
-            transition: 'padding 0.5s ease-in-out'
-          });
-        }
+          if (wrapper) {
+            wrapper.setStyle({
+              padding:'0px 0px 0px 0px',
+              transition: 'padding 0.5s ease-in-out'
+            });
+          }
         }
       },
     };
   })());
-  
 }

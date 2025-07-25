@@ -28,15 +28,21 @@ export default (editor, opts = {}) => {
     const drag = {
       run(editor, sender) {
         editor.setDragMode('absolute');
+
+        if (sender && sender.set && sender.get) {
+          sender.set('active', true);
+        }
       },
       stop(editor, sender) {
         editor.setDragMode('');
+
+        if (sender && sender.set && sender.get) {
+          sender.set('active', false);
+        }
       }
     };
 
     editor.Commands.add('dragCommand', drag);
-
-   
 
     editor.on('undo', arg => {
       if (editor.Panels.getButton('options', 'dragModeButton')._previousAttributes.active == true) {
@@ -164,23 +170,30 @@ export default (editor, opts = {}) => {
     editor.Panels.addButton('options', {
       id: 'uploadButton',
       className: 'fa fa-upload',
-      command: 'uploadCommand'
+      command: 'uploadCommand',
+      attributes: { 'data-tippy-content': 'Upload HTML with CSS' }
     });
 
     editor.Panels.removeButton('options',"gjs-open-import-webpage"); 
     
     editor.Panels.addButton('options', {
       id: 'dragModeButton',
-      className: 'fa fa-value-absolute',
-      label: /*
-      Put this back when I can find a better icon, this one is not giving the intent strong enough
-      ` <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-width="17" height="17"
-viewBox="0 0 172 172"
-style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#b9a5a6"><path d="M86,0l-28.66667,43h21.5v35.83333h-35.83333v-21.5l-43,28.66667l43,28.66667v-21.5h35.83333v35.83333h-21.5l28.66667,43l28.66667,-43h-21.5v-35.83333h35.83333v21.5l43,-28.66667l-43,-28.66667v21.5h-35.83333v-35.83333h21.5z"></path></g></g></svg> `,
-      */
-     'Absolute Position',
+      label: `<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" width="17" height="17">
+        <g><g><path d="M256,0C166.035,0,91,72.47,91,165c0,35.202,10.578,66.592,30.879,96.006l121.494,189.58
+            c5.894,9.216,19.372,9.198,25.254,0l122.021-190.225C410.512,232.28,421,199.307,421,165C421,74.019,346.981,0,256,0z M256,240
+            c-41.353,0-75-33.647-75-75c0-41.353,33.647-75,75-75c41.353,0,75,33.647,75,75C331,206.353,297.353,240,256,240z"/></g></g>
+        <g><g><path d="M373.264,344.695l-75.531,118.087c-19.551,30.482-64.024,30.382-83.481,0.029l-75.654-118.085
+            C72.034,360.116,31,388.309,31,422c0,58.462,115.928,90,225,90s225-31.538,225-90C481,388.285,439.909,360.077,373.264,344.695z" /></g></g>
+        </svg>`,
       command: 'dragCommand',
+      attributes: { 'data-tippy-content': 'Absolute Position Drag Mode' }
+    });
+
+    editor.Panels.addButton('options', {
+      id: 'tutorialButton',
+      className: 'fa fa-question-circle',
+      attributes: { 'data-tippy-content': 'Start Tutorial' }
     });
 
   });
