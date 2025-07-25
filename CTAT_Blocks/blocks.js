@@ -332,25 +332,24 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   bm.add('Table', {
     label: '3x3 Table',
     category: 'Basic Containers',
-    content: `<table data-gjs-resizable="true">
+    content: `<table data-gjs-resizable="true" style="min-height:100px;">
     <tr class="tablerow" data-gjs-resizable="true">
-      <th class="tablehead" data-gjs-resizable="true"></th>
-      <th class="tablehead" data-gjs-resizable="true"></th>
-      <th class="tablehead" data-gjs-resizable="true"></th>
+      <th class="tablehead" data-gjs-resizable="true" style="height:30px;"></th>
+      <th class="tablehead" data-gjs-resizable="true" style="height:30px;"></th>
+      <th class="tablehead" data-gjs-resizable="true" style="height:30px;"></th>
     </tr>
     <tr class="tablerow" data-gjs-resizable="true">
-      <td class="tablecell" class="tablecell" data-gjs-resizable="true"></td>
-      <td class="tablecell" data-gjs-resizable="true"></td>
-      <td class="tablecell" data-gjs-resizable="true"></td>
+      <td class="tablecell" data-gjs-resizable="true" style="height:30px;"></td>
+      <td class="tablecell" data-gjs-resizable="true" style="height:30px;"></td>
+      <td class="tablecell" data-gjs-resizable="true" style="height:30px;"></td>
     </tr>
     <tr class="tablerow" data-gjs-resizable="true">
-      <td class="tablecell" data-gjs-resizable="true"></td>
-      <td class="tablecell" data-gjs-resizable="true"></td>
-      <td class="tablecell" data-gjs-resizable="true"></td>
+      <td class="tablecell" data-gjs-resizable="true" style="height:30px;"></td>
+      <td class="tablecell" data-gjs-resizable="true" style="height:30px;"></td>
+      <td class="tablecell" data-gjs-resizable="true" style="height:30px;"></td>
     </tr>
-  </table>`
-  ,
-  render: ({ model, className }) => `<div class="${className}__my-wrap">
+  </table>`,
+    render: ({ model, className }) => `<div class="${className}__my-wrap">
   <div>
   <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
   width="48" height="48"

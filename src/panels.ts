@@ -189,9 +189,9 @@ const panelStyles = `
   width: fit-content;
   min-width: ${LEFT_PANEL_WIDTH};
   max-width: 350px;
-  height: calc(90vh - var(--gjs-canvas-top));
+  height: 100vh;
   overflow: auto;
-  padding: 10px 10px 20px 10px;
+  padding: 10px 10px calc(20px + 10vh + var(--gjs-canvas-top)) 10px
 }
 
 .gjs-layer-item {
