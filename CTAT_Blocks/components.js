@@ -338,6 +338,47 @@ export default (editor, opts = {}) => {
 
   domc.addType('CTATJumble', new CTATComponentDef('CTATJumble', ['id'].concat(CTATTraits)));
 
+  domc.addType('CTATNLPInput', new CTATComponentDef('CTATNLPInput', [
+  'id',
+  {
+    type: 'text',
+    name: 'data-ctat-nlp-url',
+    label: 'NLP Server URL',
+    placeholder: 'https://example.com/process?input=${input}',
+  },
+  {
+    type: 'select',
+    name: 'data-ctat-nlp-method',
+    label: 'HTTP Method',
+    options: ['GET', 'POST'],
+    default: 'GET',
+  },
+  {
+    type: 'text',
+    name: 'data-ctat-post-body',
+    label: 'POST Body Template',
+    placeholder: '{"user_input": "${input}"}',
+  },
+  {
+    type: 'text',
+    name: 'data-ctat-nlp-action',
+    label: 'NLP Action',
+    placeholder: 'NLPclassification',
+  },
+  {
+    type: 'text',
+    name: 'data-ctat-nlp-headers',
+    label: 'HTTP Headers (JSON)',
+    placeholder: '{"Accept": "text/json"}',
+  },
+  {
+    type: 'text',
+    name: 'data-ctat-preprocess',
+    label: 'Preprocess Function Name',
+    placeholder: 'customPreprocessFunc',
+  },
+].concat(CTATTraits)));
+
   domc.addType('CTATNumberLine', new CTATComponentDef('CTATNumberLine', [
     'id',
     {

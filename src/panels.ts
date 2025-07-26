@@ -49,7 +49,6 @@ const createDropdownContent = (label: string, width: string = '180px') => {
     height="24"  
     viewBox="0 0 350 350" 
     style="
-      fill: var(--gjs-font-color); 
       transition: transform 0.3s ease;
       transform: translate(5px, 5px)
     "
@@ -61,7 +60,6 @@ const createDropdownContent = (label: string, width: string = '180px') => {
     class="layers-button-text" 
     style="
       font-size: 14px; 
-      color: var(--gjs-font-color); 
       font-weight: 500;
       user-select: none;
       margin-bottom: 4px;
