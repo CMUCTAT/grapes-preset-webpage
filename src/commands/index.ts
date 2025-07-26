@@ -287,7 +287,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             panel.set('appendContent', stylePanelElement).trigger('change:appendContent');
 
             if (selectorManager.getConfig().custom) {
-              selectorManager.__trgCustom({ container: stylePanelElement });   // <-- critical line
+              selectorManager.__trgCustom({ container: stylePanelElement });
             } else {
               stylePanelElement.appendChild(selectorManager.render());
             }

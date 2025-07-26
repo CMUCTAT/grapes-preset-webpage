@@ -37,7 +37,6 @@ export default (editor, opts = {}) => {
   };
   
   const CTATTraits = [
-    // 'id',
     ENABLE,
     TUTOR,
     SHOW_FEEDBACK, 
@@ -45,15 +44,6 @@ export default (editor, opts = {}) => {
     SHOW_HINT_HIGHLIGHT
   ];
 
-  const CTATTraitsWithId = [
-    'id',
-    ENABLE,
-    TUTOR,
-    SHOW_FEEDBACK, 
-    DISABLE_ON_CORRECT,
-    SHOW_HINT_HIGHLIGHT
-  ];
-  
   //setters to call on CTATComponent instances to reflect attr changes in the canvas
   const CTATAttrSetters = {
 	'data-ctat-enabled': 'setEnabled',
@@ -346,9 +336,10 @@ export default (editor, opts = {}) => {
     'data-ctat-image-disabled',
   ].concat(CTATTraits)));
 
-  domc.addType('CTATJumble', new CTATComponentDef('CTATJumble', CTATTraitsWithId.slice()));
+  domc.addType('CTATJumble', new CTATComponentDef('CTATJumble', ['id'].concat(CTATTraits)));
 
-  domc.addType('CTATNumberLine', new CTATComponentDef('CTATNumberLine', CTATTraitsWithId.concat([
+  domc.addType('CTATNumberLine', new CTATComponentDef('CTATNumberLine', [
+    'id',
     {
       type: 'text',
       name: 'data-ctat-maximum',
@@ -427,9 +418,10 @@ export default (editor, opts = {}) => {
       name: 'data-ctat-ctrl-denominator',
       label: "Denominator Ctrls",
     }, 
-  ])));
+  ].concat(CTATTraits)));
 
-  domc.addType('CTATNumericStepper', new CTATComponentDef('CTATNumericStepper', CTATTraitsWithId.concat([
+  domc.addType('CTATNumericStepper', new CTATComponentDef('CTATNumericStepper', [
+    'id',
     {
       type: 'text',
       name: 'value',
@@ -450,9 +442,10 @@ export default (editor, opts = {}) => {
       name: 'step',
       label: "Step Value",
     }, 
-  ])));
+  ].concat(CTATTraits)));
 
-  domc.addType('CTATPieChart', new CTATComponentDef('CTATPieChart', CTATTraitsWithId.concat([
+  domc.addType('CTATPieChart', new CTATComponentDef('CTATPieChart', [
+    'id',
     {
       type: 'text',
       name: 'data-ctat-value',
@@ -486,9 +479,10 @@ export default (editor, opts = {}) => {
       label: "Shadow Length",
       placeholder: "3"
     }, 
-  ])));
+  ].concat(CTATTraits)));
 
-  domc.addType('CTATRadioButton', new CTATComponentDef('CTATRadioButton', CTATTraitsWithId.concat([
+  domc.addType('CTATRadioButton', new CTATComponentDef('CTATRadioButton', [
+    'id',
     'name',
     {
       type: 'text',
@@ -496,7 +490,7 @@ export default (editor, opts = {}) => {
       label: "Label",
       placeholder: "button1"
     }       
-  ])));  
+  ].concat(CTATTraits)));  
 
   domc.addType('CTATSkillWindow', new CTATComponentDef('CTATSkillWindow', [
     'id'
@@ -507,7 +501,8 @@ export default (editor, opts = {}) => {
     }
   ]));
 
-  domc.addType('CTATSubmitButton', new CTATComponentDef('CTATSubmitButton', CTATTraitsWithId.concat([
+  domc.addType('CTATSubmitButton', new CTATComponentDef('CTATSubmitButton', [
+    'id',
     {
       type:'text',
       name:'data-ctat-target',
@@ -523,7 +518,27 @@ export default (editor, opts = {}) => {
  
       label:'Value'
     },
-  ])));
+  ].concat(CTATTraits)));
+
+  domc.addType('CTATTable', new CTATComponentDef('CTATTable', [
+    'id',
+    {
+      type:'number',
+      name:'data-ctat-num-rows',
+      label:'Rows',
+      placeholder: "2",
+      min: 1,
+      step: 1
+    },
+    {
+      type: 'number',
+      name: 'data-ctat-num-cols',
+      label: "Columns",
+      placeholder: "2",
+      min: 1,
+      step: 1,
+    },
+  ].concat(CTATTraits)));
   
   domc.addType('CTATVideo', new CTATComponentDef('CTATVideo', [
     // Strings are automatically converted to text types
