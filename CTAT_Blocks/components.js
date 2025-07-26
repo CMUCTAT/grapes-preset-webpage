@@ -538,7 +538,13 @@ export default (editor, opts = {}) => {
       min: 1,
       step: 1,
     },
-  ].concat(CTATTraits)));
+  ]));
+
+  domc.addType('CTATTextArea', new CTATComponentDef('CTATTextArea', ['id'].concat(CTATTraits)));
+
+  domc.addType('CTATTextInput', new CTATComponentDef('CTATTextInput', ['id'].concat(CTATTraits)));
+  
+  domc.addType('CTATTextField', new CTATComponentDef('CTATTextField', ['id'].concat(CTATTraits)));
   
   domc.addType('CTATVideo', new CTATComponentDef('CTATVideo', [
     // Strings are automatically converted to text types
