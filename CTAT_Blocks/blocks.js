@@ -214,7 +214,7 @@ export default (editor, opts = {}) => {
   };
 
   const CTATTextField = {
-    type: "CTATTextField",
+    type: "text",
     attributes: {
       class: 'CTATTextField'
     },
