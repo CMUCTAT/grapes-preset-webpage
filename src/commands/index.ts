@@ -347,6 +347,19 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             layersPanelElement.appendChild(layerManager.render());
           }
 
+          // Remove specific components from the Layers panel in both cases
+          setTimeout(() => {
+            const typesToHide = [
+              'CTATComboBox',
+              'CTATAudioButton',
+              'CTATButton',
+              'CTATSubmitButton'
+            ];
+            typesToHide.forEach(type => {
+              layersPanelElement.querySelectorAll(`[data-ctat-component="${type}"]`).forEach(el => el.remove());
+            });
+          }, 0);
+
           panel.set('appendContent', layersPanelElement).trigger('change:appendContent');
           layersPanel = layersPanelElement;
         }
