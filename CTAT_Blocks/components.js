@@ -598,6 +598,8 @@ export default (editor, opts = {}) => {
       type: 'checkbox', // Type of the trait
       label: 'Autoplay', // The label you will see in Settings
       name: 'data-ctat-autoplay', // The name of the attribute/property to use on component
+      changeProp: true,
+      _default: true
     }, 
     {
       type: 'checkbox', // Type of the trait
