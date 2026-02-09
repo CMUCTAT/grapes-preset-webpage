@@ -101,7 +101,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
       };
     })());
   
-    Commands.add('oba-override-2', (function () {
+    Commands.add('ctat-override', (function () {
       let ctatBlocksPanel: HTMLElement | null = null;
       return {
 

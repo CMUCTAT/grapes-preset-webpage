@@ -330,7 +330,7 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
     },
     {
       id: 'ctat-override',
-      command: 'oba-override-2',
+      command: 'ctat-override',
       label: createDropdownContent('CTAT', '100px')
     }
   ]
