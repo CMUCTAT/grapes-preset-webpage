@@ -325,9 +325,11 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
         const wrapper = editor.getWrapper();
         
         if(wrapper && editor.getDevice() == 'Desktop'){
-        wrapper.setStyle({
-          padding:`0px 0px 0px ${LEFT_PANEL_WIDTH}`,
-          transition: 'padding 0.5s ease-in-out'
+        editor.UndoManager.skip(() => {
+          wrapper.setStyle({
+            padding:`0px 0px 0px ${LEFT_PANEL_WIDTH}`,
+            transition: 'padding 0.5s ease-in-out'
+          });
         });
       }
         if (!layersPanel) {
@@ -372,9 +374,11 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
 
           const wrapper = editor.getWrapper();
           if (wrapper) {
-            wrapper.setStyle({
-              padding:'0px 0px 0px 0px',
-              transition: 'padding 0.5s ease-in-out'
+            editor.UndoManager.skip(() => {
+              wrapper.setStyle({
+                padding:'0px 0px 0px 0px',
+                transition: 'padding 0.5s ease-in-out'
+              });
             });
           }
         }
