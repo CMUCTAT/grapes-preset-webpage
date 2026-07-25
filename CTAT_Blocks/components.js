@@ -384,7 +384,7 @@ export default (editor, opts = {}) => {
   {
     type: 'text',
     name: 'data-ctat-nlp-url',
-    label: 'NLP Server URL',
+    label: 'LLM Server URL',
     placeholder: 'https://example.com/process?input=${input}',
   },
   {
@@ -392,7 +392,7 @@ export default (editor, opts = {}) => {
     name: 'data-ctat-nlp-method',
     label: 'HTTP Method',
     options: ['GET', 'POST'],
-    default: 'GET',
+    default: 'POST',
   },
   {
     type: 'text',
@@ -403,8 +403,8 @@ export default (editor, opts = {}) => {
   {
     type: 'text',
     name: 'data-ctat-nlp-action',
-    label: 'NLP Action',
-    placeholder: 'NLPclassification',
+    label: 'LLM Action',
+    default: 'LLMevaluation',
   },
   {
     type: 'text',
@@ -417,6 +417,83 @@ export default (editor, opts = {}) => {
     name: 'data-ctat-preprocess',
     label: 'Preprocess Function Name',
     placeholder: 'customPreprocessFunc',
+  },
+  {
+    type: 'text',
+    name: 'parse-llm-response',
+    label: 'Parse LLM Response',
+    placeholder: 'customParseFunc',
+  },
+  {
+    type: 'text',
+    name: 'llm-output-instructions',
+    label: 'LLM Output Instructions',
+    placeholder: '',
+  },
+  {
+    type: 'text',
+    name: 'llm-key',
+    label: 'LLM API Key',
+    placeholder: '',
+  },
+].concat(CTATTraits)));
+
+  domc.addType('CTATLLMTextArea', new CTATComponentDef('CTATLLMTextArea', [
+  'id',
+  {
+    type: 'text',
+    name: 'data-ctat-nlp-url',
+    label: 'LLM Server URL',
+    placeholder: 'https://example.com/process?input=${input}',
+  },
+  {
+    type: 'select',
+    name: 'data-ctat-nlp-method',
+    label: 'HTTP Method',
+    options: ['GET', 'POST'],
+    default: 'POST',
+  },
+  {
+    type: 'text',
+    name: 'data-ctat-post-body',
+    label: 'POST Body Template',
+    placeholder: '{"user_input": "${input}"}',
+  },
+  {
+    type: 'text',
+    name: 'data-ctat-nlp-action',
+    label: 'LLM Action',
+    default: 'LLMevaluation',
+  },
+  {
+    type: 'text',
+    name: 'data-ctat-nlp-headers',
+    label: 'HTTP Headers (JSON)',
+    placeholder: '{"Accept": "text/json"}',
+  },
+  {
+    type: 'text',
+    name: 'data-ctat-preprocess',
+    label: 'Preprocess Function Name',
+    placeholder: 'customPreprocessFunc',
+  },
+  {
+    type: 'text',
+    name: 'parse-llm-response',
+    label: 'Parse LLM Response',
+    placeholder: 'customParseFunc',
+  },
+  {
+    type: 'text',
+    name: 'llm-output-instructions',
+    label: 'LLM Output Instructions',
+    placeholder: '',
+  },
+  {
+    type: 'text',
+    name: 'llm-key',
+    label: 'LLM API Key',
+    placeholder: '',
   },
 ].concat(CTATTraits)));
 

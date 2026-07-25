@@ -143,6 +143,17 @@ export default (editor, opts = {}) => {
     droppbale: false,
   };
 
+  const CTATLLMTextArea =
+  {
+    type: "CTATLLMTextArea",
+    attributes: {
+      class: 'CTATLLMTextArea'
+    },
+    draggable: true,
+    resizable: true,
+    droppbale: false,
+  };
+
   const CTATNLPTextArea =
   {
     type: "CTATNLPTextArea",
@@ -637,6 +648,25 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   </div>`,  
   });
 
+  
+  bm.add('CTATNLPTextArea', {
+    label: 'NLP Text Area',
+    category: 'CTAT Components',
+    content: CTATNLPTextArea,
+    render: ({ model, className }) => `<div class="${className}__my-wrap">
+    <div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 43" style="fill:#000000;">
+        <g fill="none" stroke="#b9a5a6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+          <path d="M40.79 32.775a10 10 0 0 0-4.78-18.78h-2.52a16 16 0 1 0-27.48 14.6m7.54-3.677v-3.692h19.69v3.692m-13.538 16h7.385m-3.693-19.692v19.692"/>
+        </g>
+      </svg>
+    
+    <div class="gjs-block-label">${model.get('label')}</div>
+    </div>  
+  </div>`,  
+  });
+
+
   bm.add('CTATLLMInput', {
     label: 'LLM Input',
     category: 'CTAT Components',
@@ -654,10 +684,10 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
   </div>`,
   });
 
-  bm.add('CTATNLPTextArea', {
-    label: 'NLP Text Area',
+  bm.add('CTATLLMTextArea', {
+    label: 'LLM Text Area',
     category: 'CTAT Components',
-    content: CTATNLPTextArea,
+    content: CTATLLMTextArea,
     render: ({ model, className }) => `<div class="${className}__my-wrap">
     <div>
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 43" style="fill:#000000;">
@@ -665,10 +695,10 @@ style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-w
           <path d="M40.79 32.775a10 10 0 0 0-4.78-18.78h-2.52a16 16 0 1 0-27.48 14.6m7.54-3.677v-3.692h19.69v3.692m-13.538 16h7.385m-3.693-19.692v19.692"/>
         </g>
       </svg>
-    
+
     <div class="gjs-block-label">${model.get('label')}</div>
-    </div>  
-  </div>`,  
+    </div>
+  </div>`,
   });
 
   bm.add('CTATNumberLine', {
