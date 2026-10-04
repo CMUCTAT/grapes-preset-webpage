@@ -184,9 +184,9 @@ const panelStyles = `
   left: 0px;
   margin-left: -5px;
   background-color: #182444;
-  width: fit-content;
+  width: var(--gjs-layers-width, ${LEFT_PANEL_WIDTH});
   min-width: ${LEFT_PANEL_WIDTH};
-  max-width: 350px;
+  box-sizing: border-box;
   height: 100vh;
   overflow: auto;
   padding: 10px 10px calc(20px + 10vh + var(--gjs-canvas-top)) 10px
@@ -429,7 +429,7 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
         position: 'fixed',
         top: '50px',  
         right: '0',
-        width: '15%',
+        width: 'var(--gjs-left-width)',
         height: 'calc(100vh - 50px)', 
         display: 'flex',
         flexDirection: 'column',  

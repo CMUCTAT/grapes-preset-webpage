@@ -312,6 +312,8 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
   
   Commands.add('ola-override', (function () {
     let layersPanel: HTMLElement | null = null;
+    let resizeHandle: HTMLElement | null = null;
+    let layersWidth = parseFloat(LEFT_PANEL_WIDTH);
     return {
 
       run(editor: any) {
@@ -327,7 +329,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
         if(wrapper && editor.getDevice() == 'Desktop'){
         editor.UndoManager.skip(() => {
           wrapper.setStyle({
-            padding:`0px 0px 0px ${LEFT_PANEL_WIDTH}`,
+            padding:`0px 0px 0px ${layersWidth}px`,
             transition: 'padding 0.5s ease-in-out'
           });
         });
@@ -351,10 +353,49 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
 
           panel.set('appendContent', layersPanelElement).trigger('change:appendContent');
           layersPanel = layersPanelElement;
+
+          resizeHandle = document.createElement('div');
+          Object.assign(resizeHandle.style, {
+            position: 'absolute',
+            top: 'var(--gjs-canvas-top)',
+            bottom: '0',
+            left: `calc(var(--gjs-layers-width, ${LEFT_PANEL_WIDTH}) - 9px)`,
+            width: '8px',
+            cursor: 'ew-resize',
+            touchAction: 'none',
+            userSelect: 'none',
+            zIndex: 10000,
+          });
+          let resizing = false;
+          let editorLeft = 0;
+          let maximumWidth = 0;
+          resizeHandle.addEventListener('pointerdown', event => {
+            const editorRect = editor.getContainer().getBoundingClientRect();
+            editorLeft = editorRect.left;
+            maximumWidth = editorRect.width / 2;
+            resizing = true;
+            resizeHandle?.setPointerCapture(event.pointerId);
+          });
+          resizeHandle.addEventListener('pointermove', event => {
+            if (!resizing) return;
+            layersWidth = Math.min(maximumWidth, Math.max(parseFloat(LEFT_PANEL_WIDTH), event.clientX - editorLeft + 5));
+            editor.getContainer().style.setProperty('--gjs-layers-width', `${layersWidth}px`);
+            if (wrapper && editor.getDevice() == 'Desktop') {
+              editor.UndoManager.skip(() => wrapper.setStyle({ padding: `0px 0px 0px ${layersWidth}px`, transition: 'none' }));
+            }
+          });
+          const stopResizing = () => {
+            if (resizing) editor.refresh({ tools: true });
+            resizing = false;
+          };
+          resizeHandle.addEventListener('pointerup', stopResizing);
+          resizeHandle.addEventListener('pointercancel', stopResizing);
+          editor.getContainer().appendChild(resizeHandle);
         }
         layersPanel.classList.remove('rise');
         layersPanel.classList.add('opening');
         layersPanel.style.display = 'block';
+        if (resizeHandle) resizeHandle.style.display = 'block';
         layersPanel.addEventListener('animationend', () => {
           if (!layersPanel) return;
           layersPanel.classList.remove('opening');
@@ -364,6 +405,7 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
       
       stop() {
         if (layersPanel) {
+          if (resizeHandle) resizeHandle.style.display = 'none';
           layersPanel.classList.remove('opening');
           layersPanel.classList.add('rise');
           layersPanel.addEventListener('animationend', () => {
