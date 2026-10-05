@@ -9,6 +9,7 @@ import {
   cmdClear,
   TARGET_PANEL_ID,
   LEFT_PANEL_WIDTH,
+  LAYERS_RESIZE_HANDLE_WIDTH,
   CUSTOM_OTA_PANEL_HEIGHT,
 } from './consts';
 
@@ -189,12 +190,35 @@ const panelStyles = `
   box-sizing: border-box;
   height: 100vh;
   overflow: auto;
-  padding: 10px 10px calc(20px + 10vh + var(--gjs-canvas-top)) 10px
+  padding: 10px ${10 - LAYERS_RESIZE_HANDLE_WIDTH / 2}px calc(20px + 10vh + var(--gjs-canvas-top)) 10px
 }
 
 .gjs-layer-item {
   height: 20px;
   border-bottom: none;
+}
+
+#my-custom-layers .gjs-layer {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+#my-custom-layers .gjs-layer-item-left,
+#my-custom-layers .gjs-layer-title-c,
+#my-custom-layers .gjs-layer-title-inn {
+  min-width: 0;
+}
+
+#my-custom-layers .gjs-layer-title-c {
+  overflow: hidden;
+}
+
+#my-custom-layers .gjs-layer-item-right {
+  flex: 0 0 auto;
+}
+
+#my-custom-layers .gjs-layer-caret,
+#my-custom-layers .gjs-layer__icon {
+  flex-shrink: 0;
 }
 
 .gjs-pn-layers-toggle {

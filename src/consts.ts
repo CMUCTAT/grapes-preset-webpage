@@ -6,4 +6,5 @@ export const cmdClear = 'canvas-clear';
 export const TARGET_PANEL_ID = 'my-custom-panel';
 
 export const LEFT_PANEL_WIDTH = '240px';
+export const LAYERS_RESIZE_HANDLE_WIDTH = 8;
 export const CUSTOM_OTA_PANEL_HEIGHT = '25vh';
