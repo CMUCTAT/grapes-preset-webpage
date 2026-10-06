@@ -7,6 +7,7 @@ import {
   cmdDeviceTablet,
   TARGET_PANEL_ID,
   LEFT_PANEL_WIDTH,
+  LAYERS_RESIZE_HANDLE_WIDTH,
 } from './../consts';
 import openImport from './openImport';
 
@@ -359,8 +360,8 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             position: 'absolute',
             top: 'var(--gjs-canvas-top)',
             bottom: '0',
-            left: `calc(var(--gjs-layers-width, ${LEFT_PANEL_WIDTH}) - 9px)`,
-            width: '8px',
+            left: `calc(var(--gjs-layers-width, ${LEFT_PANEL_WIDTH}) - ${LAYERS_RESIZE_HANDLE_WIDTH + 1}px)`,
+            width: `${LAYERS_RESIZE_HANDLE_WIDTH}px`,
             cursor: 'ew-resize',
             touchAction: 'none',
             userSelect: 'none',
