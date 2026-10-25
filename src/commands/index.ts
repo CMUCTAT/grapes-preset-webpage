@@ -325,16 +325,15 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
         let panelInfo = panelManager.getPanel(TARGET_PANEL_ID);
 
         if (layerManagerConfig.appendTo) return;
-        const wrapper = editor.getWrapper();
+        const canvas = editor.Canvas.getElement();
         
-        if(wrapper && editor.getDevice() == 'Desktop'){
-        editor.UndoManager.skip(() => {
-          wrapper.setStyle({
-            padding:`0px 0px 0px ${layersWidth}px`,
-            transition: 'padding 0.5s ease-in-out'
+        if (canvas) {
+          Object.assign(canvas.style, {
+            left: `var(--gjs-layers-width, ${LEFT_PANEL_WIDTH})`,
+            width: `calc(100% - var(--gjs-left-width) - var(--gjs-layers-width, ${LEFT_PANEL_WIDTH}))`,
+            transition: 'left 0.5s ease-in-out',
           });
-        });
-      }
+        }
         if (!layersPanel) {
           const layersPanelElement = document.createElement('div');
           layersPanelElement.id = 'my-custom-layers';
@@ -375,19 +374,19 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             editorLeft = editorRect.left;
             maximumWidth = editorRect.width / 2;
             resizing = true;
+            if (canvas) canvas.style.transition = 'none';
             resizeHandle?.setPointerCapture(event.pointerId);
           });
           resizeHandle.addEventListener('pointermove', event => {
             if (!resizing) return;
             layersWidth = Math.min(maximumWidth, Math.max(parseFloat(LEFT_PANEL_WIDTH), event.clientX - editorLeft + 5));
             editor.getContainer().style.setProperty('--gjs-layers-width', `${layersWidth}px`);
-            if (wrapper && editor.getDevice() == 'Desktop') {
-              editor.UndoManager.skip(() => wrapper.setStyle({ padding: `0px 0px 0px ${layersWidth}px`, transition: 'none' }));
-            }
+            editor.refresh({ tools: true });
           });
           const stopResizing = () => {
             if (resizing) editor.refresh({ tools: true });
             resizing = false;
+            if (canvas) canvas.style.transition = 'left 0.5s ease-in-out';
           };
           resizeHandle.addEventListener('pointerup', stopResizing);
           resizeHandle.addEventListener('pointercancel', stopResizing);
@@ -415,13 +414,12 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             layersPanel.classList.remove('rise');
           }, { once: true });
 
-          const wrapper = editor.getWrapper();
-          if (wrapper) {
-            editor.UndoManager.skip(() => {
-              wrapper.setStyle({
-                padding:'0px 0px 0px 0px',
-                transition: 'padding 0.5s ease-in-out'
-              });
+          const canvas = editor.Canvas.getElement();
+          if (canvas) {
+            Object.assign(canvas.style, {
+              left: '0',
+              width: 'calc(100% - var(--gjs-left-width))',
+              transition: 'left 0.5s ease-in-out',
             });
           }
         }
