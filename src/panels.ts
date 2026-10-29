@@ -348,6 +348,11 @@ export default (editor: Editor, opts: RequiredPluginOptions) => {
 
   const obaPanelButtons = [
     {
+      id: 'presets-override',
+      command: 'presets-override',
+      label: createDropdownContent('Presets', '100px')
+    },
+    {
       id: 'oba-override',
       command: 'oba-override',
       label: createDropdownContent('Basics', '100px')

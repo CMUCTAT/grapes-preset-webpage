@@ -10,8 +10,17 @@ import {
   LAYERS_RESIZE_HANDLE_WIDTH,
 } from './../consts';
 import openImport from './openImport';
+import { PRESET_CATEGORIES } from '../presets';
 
-let activeOba: "" | "basics" | "ctat" = "";
+type BlockPanelName = "basics" | "ctat" | "presets";
+
+let activeOba: "" | BlockPanelName = "";
+
+const blockPanelCategories: Record<BlockPanelName, string[]> = {
+  basics: ['Basic Containers', 'Basics', 'Basic Text Components'],
+  ctat: ['CTAT Components'],
+  presets: PRESET_CATEGORIES,
+};
 
 export default (editor: Editor, config: RequiredPluginOptions) => {
   const { Commands } = editor;
@@ -33,144 +42,55 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
   });
   Commands.add(cmdClear, (e: Editor) => confirm(txtConfirm) && e.runCommand('core:canvas-clear'));
 
-  Commands.add('oba-override', (function () {
-      let blocksPanel: HTMLElement | null = null;
-      return {
+  let blocksPanel: HTMLElement | null = null;
+  const addBlockPanelCommand = (commandId: string, panelName: BlockPanelName) => {
+    Commands.add(commandId, {
+      run(editor: any) {
+        activeOba = panelName;
 
-        run(editor: any) {
-          activeOba = "basics";
+        const blockManager = editor.BlockManager;
+        const panelManager = editor.Panels;
+        const blockManagerConfig = blockManager.getConfig();
 
-          const blockManager = editor.BlockManager;
-          const panelManager = editor.Panels;
-          const blockManagerConfig = blockManager.getConfig();
+        blocksPanel = document.getElementById('oba-custom-panel');
+        if (!blocksPanel) {
+          blocksPanel = document.createElement('div');
+          blocksPanel.id = 'oba-custom-panel';
 
-          blocksPanel = document.getElementById('oba-custom-panel');
-          if (!blocksPanel) {
-            const blocksPanelElement = document.createElement('div');
-            blocksPanelElement.id = "oba-custom-panel";
+          let panel = panelManager.getPanel('oba-custom-panel');
+          if (!panel) panel = panelManager.addPanel({ id: 'oba-custom-panel' });
 
-            let panel = panelManager.getPanel("oba-custom-panel");
-            if (!panel) {
-              panel = panelManager.addPanel({
-                id: "oba-custom-panel",
-              });
-            }
-
-            if (blockManagerConfig.custom) {
-              blockManager.__trgCustom({ container: blocksPanelElement });
-            } else {
-              blocksPanelElement.appendChild(blockManager.render());
-            }
-
-            panel.set('appendContent', blocksPanelElement).trigger('change:appendContent');
-            blocksPanel = blocksPanelElement;
+          if (blockManagerConfig.custom) {
+            blockManager.__trgCustom({ container: blocksPanel });
+          } else {
+            blocksPanel.appendChild(blockManager.render());
           }
 
-          blocksPanel.style.display = 'block';
+          panel.set('appendContent', blocksPanel).trigger('change:appendContent');
+        }
 
-          setTimeout(() => {
-            if (blocksPanel) {
+        blocksPanel.style.display = 'block';
+        const visibleCategories = new Set(blockPanelCategories[panelName]);
+        setTimeout(() => {
+          blocksPanel?.querySelectorAll<HTMLElement>('.gjs-block-category').forEach(category => {
+            const label = category.querySelector('.gjs-title')?.textContent?.trim();
+            category.style.display = label && visibleCategories.has(label) ? 'block' : 'none';
+          });
+        }, 0);
+      },
 
-              let blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
+      stop() {
+        if (!blocksPanel) return;
+        setTimeout(() => {
+          if (blocksPanel && activeOba === panelName) blocksPanel.style.display = 'none';
+        }, 150);
+      },
+    });
+  };
 
-              if (blockCategories.length < 3) {
-                blocksPanel.appendChild(editor.BlockManager.render())
-                blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
-              }
-              if (blockCategories.length >= 3) {
-                blockCategories.forEach((category: Element, index: Number) => {
-                  if (index === 2) {
-                    (category as HTMLElement).style.display = 'none';
-                  } else {
-                    (category as HTMLElement).style.display = 'block';
-                  }
-                });
-              }
-            }
-          }, 0);
-        },
-        stop() {
-          if (!blocksPanel) return;
-
-          setTimeout(() => {
-            if (!blocksPanel) return;
-            if (activeOba === "basics") {
-              blocksPanel.style.display = 'none';
-            }
-          }, 150);
-        },
-      };
-    })());
-  
-    Commands.add('ctat-override', (function () {
-      let ctatBlocksPanel: HTMLElement | null = null;
-      return {
-
-        run(editor: any) {
-          activeOba = "ctat";
-
-          const blockManager = editor.BlockManager;
-          const panelManager = editor.Panels;
-          const blockManagerConfig = blockManager.getConfig();
-          ctatBlocksPanel = document.getElementById('oba-custom-panel');
-
-          if (!ctatBlocksPanel) {
-            const ctatBlocksPanelElement = document.createElement('div');
-            ctatBlocksPanelElement.id = "oba-custom-panel";
-
-            let panel = panelManager.getPanel("oba-custom-panel");
-            if (!panel) {
-              panel = panelManager.addPanel({
-                id: "oba-custom-panel",
-              });
-            }
-
-            if (blockManagerConfig.custom) {
-              blockManager.__trgCustom({ container: ctatBlocksPanelElement });
-            } else {
-              ctatBlocksPanelElement.appendChild(blockManager.render());
-            }
-
-            panel.set('appendContent', ctatBlocksPanelElement).trigger('change:appendContent');
-            ctatBlocksPanel = ctatBlocksPanelElement;
-          }
-
-          ctatBlocksPanel.style.display = 'block';
-
-          setTimeout(() => {
-            if (ctatBlocksPanel) {
-
-              let blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
-
-              if (blockCategories.length < 3) {
-                ctatBlocksPanel.appendChild(editor.BlockManager.render())
-                blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
-              }
-              if (blockCategories.length >= 3) {
-                blockCategories.forEach((category: Element, index: Number) => {
-                  if (index === 2) {
-                    (category as HTMLElement).style.display = 'block';
-                  } else {
-                    (category as HTMLElement).style.display = 'none';
-                  }
-                });
-              }
-            }
-          }, 0);
-        },
-        
-        stop() {
-          if (!ctatBlocksPanel) return;
-
-          setTimeout(() => {
-            if (!ctatBlocksPanel) return;
-            if (activeOba === "ctat") {
-              ctatBlocksPanel.style.display = 'none';
-            }
-          }, 150);
-        },
-      };
-    })());
+  addBlockPanelCommand('presets-override', 'presets');
+  addBlockPanelCommand('oba-override', 'basics');
+  addBlockPanelCommand('ctat-override', 'ctat');
 
 
   Commands.add('ota-override', (function () {
