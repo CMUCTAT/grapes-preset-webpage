@@ -2,6 +2,7 @@ import type { Editor, Plugin } from 'grapesjs';
 import blocks from './blocks';
 import commands from './commands';
 import panels from './panels';
+import presets from './presets';
 import run from '../CTAT_Blocks/index.js'
 
 export type PluginOptions = {
@@ -128,6 +129,9 @@ const plugin: Plugin<PluginOptions> = (editor, opts: Partial<PluginOptions> = {}
 
   // Load panels
   panels(editor, config);
+
+  // Load presets
+  presets(editor);
 
   //load ctat_plugin
   run(editor);

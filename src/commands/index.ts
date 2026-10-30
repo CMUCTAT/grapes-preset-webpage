@@ -10,8 +10,17 @@ import {
   LAYERS_RESIZE_HANDLE_WIDTH,
 } from './../consts';
 import openImport from './openImport';
+import { PRESET_CATEGORIES } from '../presets';
 
-let activeOba: "" | "basics" | "ctat" = "";
+type BlockPanelName = "basics" | "ctat" | "presets";
+
+let activeOba: "" | BlockPanelName = "";
+
+const blockPanelCategories: Record<BlockPanelName, string[]> = {
+  basics: ['Basic Containers', 'Basics', 'Basic Text Components'],
+  ctat: ['CTAT Components'],
+  presets: PRESET_CATEGORIES,
+};
 
 export default (editor: Editor, config: RequiredPluginOptions) => {
   const { Commands } = editor;
@@ -33,144 +42,55 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
   });
   Commands.add(cmdClear, (e: Editor) => confirm(txtConfirm) && e.runCommand('core:canvas-clear'));
 
-  Commands.add('oba-override', (function () {
-      let blocksPanel: HTMLElement | null = null;
-      return {
+  let blocksPanel: HTMLElement | null = null;
+  const addBlockPanelCommand = (commandId: string, panelName: BlockPanelName) => {
+    Commands.add(commandId, {
+      run(editor: any) {
+        activeOba = panelName;
 
-        run(editor: any) {
-          activeOba = "basics";
+        const blockManager = editor.BlockManager;
+        const panelManager = editor.Panels;
+        const blockManagerConfig = blockManager.getConfig();
 
-          const blockManager = editor.BlockManager;
-          const panelManager = editor.Panels;
-          const blockManagerConfig = blockManager.getConfig();
+        blocksPanel = document.getElementById('oba-custom-panel');
+        if (!blocksPanel) {
+          blocksPanel = document.createElement('div');
+          blocksPanel.id = 'oba-custom-panel';
 
-          blocksPanel = document.getElementById('oba-custom-panel');
-          if (!blocksPanel) {
-            const blocksPanelElement = document.createElement('div');
-            blocksPanelElement.id = "oba-custom-panel";
+          let panel = panelManager.getPanel('oba-custom-panel');
+          if (!panel) panel = panelManager.addPanel({ id: 'oba-custom-panel' });
 
-            let panel = panelManager.getPanel("oba-custom-panel");
-            if (!panel) {
-              panel = panelManager.addPanel({
-                id: "oba-custom-panel",
-              });
-            }
-
-            if (blockManagerConfig.custom) {
-              blockManager.__trgCustom({ container: blocksPanelElement });
-            } else {
-              blocksPanelElement.appendChild(blockManager.render());
-            }
-
-            panel.set('appendContent', blocksPanelElement).trigger('change:appendContent');
-            blocksPanel = blocksPanelElement;
+          if (blockManagerConfig.custom) {
+            blockManager.__trgCustom({ container: blocksPanel });
+          } else {
+            blocksPanel.appendChild(blockManager.render());
           }
 
-          blocksPanel.style.display = 'block';
+          panel.set('appendContent', blocksPanel).trigger('change:appendContent');
+        }
 
-          setTimeout(() => {
-            if (blocksPanel) {
+        blocksPanel.style.display = 'block';
+        const visibleCategories = new Set(blockPanelCategories[panelName]);
+        setTimeout(() => {
+          blocksPanel?.querySelectorAll<HTMLElement>('.gjs-block-category').forEach(category => {
+            const label = category.querySelector('.gjs-title')?.textContent?.trim();
+            category.style.display = label && visibleCategories.has(label) ? 'block' : 'none';
+          });
+        }, 0);
+      },
 
-              let blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
+      stop() {
+        if (!blocksPanel) return;
+        setTimeout(() => {
+          if (blocksPanel && activeOba === panelName) blocksPanel.style.display = 'none';
+        }, 150);
+      },
+    });
+  };
 
-              if (blockCategories.length < 3) {
-                blocksPanel.appendChild(editor.BlockManager.render())
-                blockCategories = blocksPanel.querySelectorAll('.gjs-block-category');
-              }
-              if (blockCategories.length >= 3) {
-                blockCategories.forEach((category: Element, index: Number) => {
-                  if (index === 2) {
-                    (category as HTMLElement).style.display = 'none';
-                  } else {
-                    (category as HTMLElement).style.display = 'block';
-                  }
-                });
-              }
-            }
-          }, 0);
-        },
-        stop() {
-          if (!blocksPanel) return;
-
-          setTimeout(() => {
-            if (!blocksPanel) return;
-            if (activeOba === "basics") {
-              blocksPanel.style.display = 'none';
-            }
-          }, 150);
-        },
-      };
-    })());
-  
-    Commands.add('ctat-override', (function () {
-      let ctatBlocksPanel: HTMLElement | null = null;
-      return {
-
-        run(editor: any) {
-          activeOba = "ctat";
-
-          const blockManager = editor.BlockManager;
-          const panelManager = editor.Panels;
-          const blockManagerConfig = blockManager.getConfig();
-          ctatBlocksPanel = document.getElementById('oba-custom-panel');
-
-          if (!ctatBlocksPanel) {
-            const ctatBlocksPanelElement = document.createElement('div');
-            ctatBlocksPanelElement.id = "oba-custom-panel";
-
-            let panel = panelManager.getPanel("oba-custom-panel");
-            if (!panel) {
-              panel = panelManager.addPanel({
-                id: "oba-custom-panel",
-              });
-            }
-
-            if (blockManagerConfig.custom) {
-              blockManager.__trgCustom({ container: ctatBlocksPanelElement });
-            } else {
-              ctatBlocksPanelElement.appendChild(blockManager.render());
-            }
-
-            panel.set('appendContent', ctatBlocksPanelElement).trigger('change:appendContent');
-            ctatBlocksPanel = ctatBlocksPanelElement;
-          }
-
-          ctatBlocksPanel.style.display = 'block';
-
-          setTimeout(() => {
-            if (ctatBlocksPanel) {
-
-              let blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
-
-              if (blockCategories.length < 3) {
-                ctatBlocksPanel.appendChild(editor.BlockManager.render())
-                blockCategories = ctatBlocksPanel.querySelectorAll('.gjs-block-category');
-              }
-              if (blockCategories.length >= 3) {
-                blockCategories.forEach((category: Element, index: Number) => {
-                  if (index === 2) {
-                    (category as HTMLElement).style.display = 'block';
-                  } else {
-                    (category as HTMLElement).style.display = 'none';
-                  }
-                });
-              }
-            }
-          }, 0);
-        },
-        
-        stop() {
-          if (!ctatBlocksPanel) return;
-
-          setTimeout(() => {
-            if (!ctatBlocksPanel) return;
-            if (activeOba === "ctat") {
-              ctatBlocksPanel.style.display = 'none';
-            }
-          }, 150);
-        },
-      };
-    })());
+  addBlockPanelCommand('presets-override', 'presets');
+  addBlockPanelCommand('oba-override', 'basics');
+  addBlockPanelCommand('ctat-override', 'ctat');
 
 
   Commands.add('ota-override', (function () {
@@ -325,16 +245,15 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
         let panelInfo = panelManager.getPanel(TARGET_PANEL_ID);
 
         if (layerManagerConfig.appendTo) return;
-        const wrapper = editor.getWrapper();
+        const canvas = editor.Canvas.getElement();
         
-        if(wrapper && editor.getDevice() == 'Desktop'){
-        editor.UndoManager.skip(() => {
-          wrapper.setStyle({
-            padding:`0px 0px 0px ${layersWidth}px`,
-            transition: 'padding 0.5s ease-in-out'
+        if (canvas) {
+          Object.assign(canvas.style, {
+            left: `var(--gjs-layers-width, ${LEFT_PANEL_WIDTH})`,
+            width: `calc(100% - var(--gjs-left-width) - var(--gjs-layers-width, ${LEFT_PANEL_WIDTH}))`,
+            transition: 'left 0.5s ease-in-out',
           });
-        });
-      }
+        }
         if (!layersPanel) {
           const layersPanelElement = document.createElement('div');
           layersPanelElement.id = 'my-custom-layers';
@@ -375,19 +294,19 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             editorLeft = editorRect.left;
             maximumWidth = editorRect.width / 2;
             resizing = true;
+            if (canvas) canvas.style.transition = 'none';
             resizeHandle?.setPointerCapture(event.pointerId);
           });
           resizeHandle.addEventListener('pointermove', event => {
             if (!resizing) return;
             layersWidth = Math.min(maximumWidth, Math.max(parseFloat(LEFT_PANEL_WIDTH), event.clientX - editorLeft + 5));
             editor.getContainer().style.setProperty('--gjs-layers-width', `${layersWidth}px`);
-            if (wrapper && editor.getDevice() == 'Desktop') {
-              editor.UndoManager.skip(() => wrapper.setStyle({ padding: `0px 0px 0px ${layersWidth}px`, transition: 'none' }));
-            }
+            editor.refresh({ tools: true });
           });
           const stopResizing = () => {
             if (resizing) editor.refresh({ tools: true });
             resizing = false;
+            if (canvas) canvas.style.transition = 'left 0.5s ease-in-out';
           };
           resizeHandle.addEventListener('pointerup', stopResizing);
           resizeHandle.addEventListener('pointercancel', stopResizing);
@@ -415,13 +334,12 @@ export default (editor: Editor, config: RequiredPluginOptions) => {
             layersPanel.classList.remove('rise');
           }, { once: true });
 
-          const wrapper = editor.getWrapper();
-          if (wrapper) {
-            editor.UndoManager.skip(() => {
-              wrapper.setStyle({
-                padding:'0px 0px 0px 0px',
-                transition: 'padding 0.5s ease-in-out'
-              });
+          const canvas = editor.Canvas.getElement();
+          if (canvas) {
+            Object.assign(canvas.style, {
+              left: '0',
+              width: 'calc(100% - var(--gjs-left-width))',
+              transition: 'left 0.5s ease-in-out',
             });
           }
         }
