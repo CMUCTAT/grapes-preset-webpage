@@ -1,8 +1,13 @@
 import type { Block, Editor } from 'grapesjs';
-import { TEMPLATE_1, TEMPLATE_2, TEMPLATE_SELECT_EVENT } from './templates';
-import { THEME_1, THEME_2, THEME_SELECT_EVENT } from './themes';
 
 export const PRESET_CATEGORIES = ['Templates', 'Themes'];
+
+type PresetItem = {
+  id: string;
+  kind: 'template' | 'theme';
+  label: string;
+  fileName: string;
+};
 
 const templateIcon = `<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 width="48" height="48"
@@ -18,91 +23,31 @@ const closePresets = (editor: Editor) =>
   editor.Panels.getButton('oba-toggle', 'presets-override')?.set('active', false);
 
 export default (editor: Editor) => {
-  const addPresetBlock = (id: string, def: Record<string, unknown>) => {
-    editor.Blocks.add(id, def as never);
-  };
+  editor.on('ctat:presets:set', (presets: PresetItem[]) => {
+    const bm = editor.Blocks;
+    bm.getAll().map(b => b.getId())
+      .filter(id => String(id).startsWith('preset-'))
+      .forEach(id => bm.remove(id));
 
-  addPresetBlock('preset-template-1', {
-    label: TEMPLATE_1.label,
-    category: PRESET_CATEGORIES[0],
-    content: '',
-    disable: true,
-    attributes: {
-      title: `Add ${TEMPLATE_1.label}`,
-      style: 'cursor:pointer',
-    },
-    render: ({ model, className }: { model: Block; className: string }) => `<div class="${className}__my-wrap">
+    for (const preset of presets) {
+      const icon = preset.kind === 'template' ? templateIcon : themeIcon;
+      bm.add(`preset-${preset.id}`, {
+        label: preset.label,
+        category: preset.kind === 'template' ? PRESET_CATEGORIES[0] : PRESET_CATEGORIES[1],
+        content: '',
+        disable: true,
+        attributes: { style: 'cursor:pointer' },
+        render: ({ model, className }: { model: Block; className: string }) => `<div class="${className}__my-wrap">
     <div>
-    ${templateIcon}
+    ${icon}
     <div class="gjs-block-label">${model.get('label')}</div>
     </div>
   </div>`,
-    onClick: (_block: unknown, currentEditor: Editor) => {
-      currentEditor.trigger(TEMPLATE_SELECT_EVENT, TEMPLATE_1);
-      closePresets(currentEditor);
-    },
-  });
-
-  addPresetBlock('preset-template-2', {
-    label: TEMPLATE_2.label,
-    category: PRESET_CATEGORIES[0],
-    content: '',
-    disable: true,
-    attributes: {
-      title: `Add ${TEMPLATE_2.label}`,
-      style: 'cursor:pointer',
-    },
-    render: ({ model, className }: { model: Block; className: string }) => `<div class="${className}__my-wrap">
-    <div>
-    ${templateIcon}
-    <div class="gjs-block-label">${model.get('label')}</div>
-    </div>
-  </div>`,
-    onClick: (_block: unknown, currentEditor: Editor) => {
-      currentEditor.trigger(TEMPLATE_SELECT_EVENT, TEMPLATE_2);
-      closePresets(currentEditor);
-    },
-  });
-
-  addPresetBlock('preset-theme-1', {
-    label: THEME_1.label,
-    category: PRESET_CATEGORIES[1],
-    content: '',
-    disable: true,
-    attributes: {
-      title: `Apply ${THEME_1.label}`,
-      style: 'cursor:pointer',
-    },
-    render: ({ model, className }: { model: Block; className: string }) => `<div class="${className}__my-wrap">
-    <div>
-    ${themeIcon}
-    <div class="gjs-block-label">${model.get('label')}</div>
-    </div>
-  </div>`,
-    onClick: (_block: unknown, currentEditor: Editor) => {
-      currentEditor.trigger(THEME_SELECT_EVENT, THEME_1);
-      closePresets(currentEditor);
-    },
-  });
-
-  addPresetBlock('preset-theme-2', {
-    label: THEME_2.label,
-    category: PRESET_CATEGORIES[1],
-    content: '',
-    disable: true,
-    attributes: {
-      title: `Apply ${THEME_2.label}`,
-      style: 'cursor:pointer',
-    },
-    render: ({ model, className }: { model: Block; className: string }) => `<div class="${className}__my-wrap">
-    <div>
-    ${themeIcon}
-    <div class="gjs-block-label">${model.get('label')}</div>
-    </div>
-  </div>`,
-    onClick: (_block: unknown, currentEditor: Editor) => {
-      currentEditor.trigger(THEME_SELECT_EVENT, THEME_2);
-      closePresets(currentEditor);
-    },
+        onClick: (_block: unknown, currentEditor: Editor) => {
+          currentEditor.trigger(`ctat:preset-${preset.kind}:select`, preset);
+          closePresets(currentEditor);
+        },
+      } as never);
+    }
   });
 };
