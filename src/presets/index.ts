@@ -7,6 +7,7 @@ type PresetItem = {
   kind: 'template' | 'theme';
   label: string;
   fileName: string;
+  active?: boolean;
 };
 
 const templateIcon = `<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
@@ -31,13 +32,14 @@ export default (editor: Editor) => {
 
     for (const preset of presets) {
       const icon = preset.kind === 'template' ? templateIcon : themeIcon;
+      const activeClass = preset.active ? ' ctat-preset-theme-active' : '';
       bm.add(`preset-${preset.id}`, {
         label: preset.label,
         category: preset.kind === 'template' ? PRESET_CATEGORIES[0] : PRESET_CATEGORIES[1],
         content: '',
         disable: true,
         attributes: { style: 'cursor:pointer' },
-        render: ({ model, className }: { model: Block; className: string }) => `<div class="${className}__my-wrap">
+        render: ({ model, className }: { model: Block; className: string }) => `<div class="${className}__my-wrap${activeClass}">
     <div>
     ${icon}
     <div class="gjs-block-label">${model.get('label')}</div>

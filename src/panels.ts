@@ -292,6 +292,10 @@ const panelStyles = `
   fill: #b9a5a6;
 }
 
+.ctat-preset-theme-active svg g[fill="#b9a5a6"] {
+  fill: #fff;
+}
+
 // .draggable-divider {
 //   width: 100%;
 //   height: 6px;
